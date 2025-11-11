@@ -22,6 +22,7 @@ private:
 	ML_Engine::Graphics::RenderObject mGround;
 	ML_Engine::Graphics::RenderTarget mRenderTarget;
 	ML_Engine::Graphics::RenderObject mScreenQuad;
+	ML_Engine::Graphics::Texture mCombineTexture;
 
 	ML_Engine::Graphics::StandardEffect mStandardEffect;
 	ML_Engine::Graphics::PostProcessingEffect mPostProcessingEffect;
