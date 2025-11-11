@@ -21,7 +21,8 @@ namespace
 		"Combine2",
 		"MotionBlur",
 		"ChromaticAberration",
-		"Wave"
+		"Wave",
+		"Infrared"
 	};
 }
 
@@ -39,7 +40,7 @@ void PostProcessingEffect::Terminate()
 	mPixelShader.Terminate();
 	mVertexShader.Terminate();
 }
-void PostProcessingEffect::Begin()
+void PostProcessingEffect::Begin(float time)
 {
 	mVertexShader.Bind();
 	mPixelShader.Bind();
@@ -92,6 +93,13 @@ void PostProcessingEffect::Begin()
 	{
 		data.param0 = mWaveLength;
 		data.param1 = mNumWaves;
+	}
+	break;
+	case Mode::Infrared:
+	{
+		data.param0 = time;
+		data.param1 = mHeatWaveIntensity; // heat intensity
+		data.param2 = mBlur; // blur strength
 	}
 	break;
 	default:
@@ -151,6 +159,11 @@ void PostProcessingEffect::DebugUI()
 		{
 			ImGui::DragFloat("WaveLength", &mWaveLength, 0.001f, 0.0f, 1.0f);
 			ImGui::DragFloat("NumWave", &mNumWaves, 0.1f, 0.0f, 1000.0f);
+		}
+		else if (mMode == Mode::Infrared)
+		{
+			ImGui::DragFloat("HeatIntensity", &mHeatWaveIntensity, 0.001f, 0.0f, 1.0f); // heat
+			ImGui::DragFloat("BlurStrength", &mBlur, 0.1f, 0.0f, 100.0f); // blur
 		}
 	}
 }

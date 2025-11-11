@@ -13,6 +13,8 @@ public:
 
 private:
 
+	float mTime = 0.0f;
+
 	void UpdateCamera(float deltaTime);
 
 	ML_Engine::Graphics::Camera mCamera;

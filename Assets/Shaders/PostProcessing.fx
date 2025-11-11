@@ -123,5 +123,68 @@ float4 PS(VS_OUTPUT input) : SV_Target
         texCoord.y += sin(waveValue) * param0;
         finalColor = textureMap0.Sample(textureSampler, texCoord);
     }
-    return finalColor;
+    else if (mode == 9) // infrared
+    {
+        // get uv coordinates
+        float2 uv = input.texCoord;
+
+        // distort uv with sine wave
+        float shimmer = sin((uv.y * 40.0f) + param0 * 10.0f) * param1;
+        float2 distortedUV = uv + shimmer * float2(0.02f, 0.02f);
+        
+        // sample neighbor for blur
+        float2 texel = float2(param2 / 1024.0f, param2 / 768.0f); // render size
+        float3 sum = 0.0f;
+        float weight = 0.0f;
+        
+        // 3x3 gaussian weights
+        float kernel[3] = { 0.27901f, 0.44198f, 0.27901f };
+
+        for (int x = -1; x <= 1; ++x)
+        {
+            for (int y = -1; y <= 1; ++y)
+            {
+                float w = kernel[abs(x)] * kernel[abs(y)];
+                sum += textureMap0.Sample(textureSampler, distortedUV + texel * float2(x, y)).rgb * w;
+                weight += w;
+            }
+        }
+        
+        float3 blurredColor = sum / weight;
+
+        // calculate brightness
+        float brightness = dot(blurredColor, float3(0.299f, 0.587f, 0.114f));
+
+        // push brightness down to keep average areas cooler
+        brightness = pow(saturate(brightness), 1.8f);
+
+        // color gradient
+        float3 coldColor = float3(0.0f, 0.1f, 0.4f); // deeper blue
+        float3 midColor = float3(1.0f, 0.0f, 0.0f); // red
+        float3 hotColor = float3(1.0f, 1.0f, 0.0f); // yellow-white
+
+        float3 heatColor;
+        if (brightness < 0.4f)
+            heatColor = lerp(coldColor, midColor, smoothstep(0.0f, 0.4f, brightness));
+        else
+            heatColor = lerp(midColor, hotColor, smoothstep(0.4f, 1.0f, brightness));
+
+        // emissive glow to bright spots
+        float glow = pow(brightness, 4.0f);
+        heatColor += glow * 0.25f;
+
+        // edge detection
+        float3 sobelX =
+        textureMap0.Sample(textureSampler, uv + texel * float2(1, 0)).rgb -
+        textureMap0.Sample(textureSampler, uv + texel * float2(-1, 0)).rgb;
+        float3 sobelY =
+        textureMap0.Sample(textureSampler, uv + texel * float2(0, 1)).rgb -
+        textureMap0.Sample(textureSampler, uv + texel * float2(0, -1)).rgb;
+        float edge = length(sobelX + sobelY);
+        heatColor += edge * 0.3f;
+
+        finalColor = float4(heatColor, 1.0f);
+
+    }
+        return finalColor;
 }

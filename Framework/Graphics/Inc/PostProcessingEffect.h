@@ -23,13 +23,14 @@ namespace ML_Engine::Graphics
 			Combine2,
 			MotionBlur,
 			ChromaticAberration,
-			Wave
+			Wave,
+			Infrared
 		};
 
 		void Initialize(const std::filesystem::path& filePath);
 		void Terminate();
 
-		void Begin();
+		void Begin(float time = 0.0f);
 		void End();
 
 		void Render(const RenderObject& renderObject);
@@ -64,5 +65,8 @@ namespace ML_Engine::Graphics
 		float mAberrationValue = 0.005f;
 		float mWaveLength = 0.05f;
 		float mNumWaves = 20.0f;
+
+		float mHeatWaveIntensity = 0.025f; // shimmer
+		float mBlur = 2.0f; // blur strength
 	};
 }

@@ -56,6 +56,8 @@ void GameState::Terminate()
 }
 void GameState::Update(float deltaTime)
 {
+	mTime += deltaTime;
+
     UpdateCamera(deltaTime);
 }
 void GameState::Render()
@@ -70,7 +72,7 @@ void GameState::Render()
         mStandardEffect.End();
     mRenderTarget.EndRender();
 
-    mPostProcessingEffect.Begin();
+    mPostProcessingEffect.Begin(mTime);
         mPostProcessingEffect.Render(mScreenQuad);
     mPostProcessingEffect.End();
 }
@@ -106,6 +108,13 @@ void GameState::DebugUI()
             }
             ImGui::PopID();
         }
+		// ground material
+		Material& material = mGround.material;
+		ImGui::ColorEdit4("Emissive#Material", &material.emissive.r);
+		ImGui::ColorEdit4("Ambient#Material", &material.ambient.r);
+		ImGui::ColorEdit4("Diffuse#Material", &material.diffuse.r);
+		ImGui::ColorEdit4("Specular#Material", &material.specular.r);
+		ImGui::DragFloat("Shininess#Material", &material.shininess, 0.1f, 0.1f, 1000.f);
     }
     ImGui::Separator();
     ImGui::Text("Render Group");
