@@ -38,7 +38,7 @@ void GameState::Initialize()
     const uint32_t screenHeight = gs->GetBackBufferHeight();
     mRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
 
-    mCombineTexture.Initialize(L"../../Assets/Textures/BloodyScreenEffects/Effect_2.png");
+    mCombineTexture.Initialize(L"../../Assets/Textures/PredatorHUD.png");
 
     // move characters
 	mCharacter.transform.position = { 0.0f, 0.0f, 0.0f };

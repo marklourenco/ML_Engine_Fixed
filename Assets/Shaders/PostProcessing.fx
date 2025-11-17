@@ -5,6 +5,7 @@ cbuffer PostProcessBuffer : register(b0)
     float param0;
     float param1;
     float param2;
+    float param3;
 }
 
 Texture2D textureMap0 : register(t0);
@@ -152,7 +153,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
         
         float3 blurredColor = sum / weight;
 
-        // calculate brightness
+        // calculate brightness | RGB -? Luminance
         float brightness = dot(blurredColor, float3(0.299f, 0.587f, 0.114f));
 
         // push brightness down to keep average areas cooler
@@ -184,6 +185,11 @@ float4 PS(VS_OUTPUT input) : SV_Target
         heatColor += edge * 0.3f;
 
         finalColor = float4(heatColor, 1.0f);
+        
+        float4 color0 = finalColor;
+        float4 color1 = textureMap1.Sample(textureSampler, input.texCoord);
+        color1.a *= 1; // alpha of predatorHUD
+        finalColor = (color0 * (1.0f - color1.a)) + (color1 * color1.a);
 
     }
         return finalColor;
