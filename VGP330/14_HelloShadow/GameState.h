@@ -18,6 +18,10 @@ private:
 	ML_Engine::Graphics::DirectionalLight mDirectionalLight;
 
 	ML_Engine::Graphics::RenderGroup mCharacter;
+	ML_Engine::Graphics::RenderGroup mCharacter02;
+	ML_Engine::Graphics::RenderGroup mCharacter03;
+	ML_Engine::Graphics::RenderObject mSphere01;
+	ML_Engine::Graphics::RenderObject mSphere02;
 	ML_Engine::Graphics::RenderObject mGround;
 
 	ML_Engine::Graphics::StandardEffect mStandardEffect;

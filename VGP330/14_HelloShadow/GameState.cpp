@@ -15,24 +15,48 @@ void GameState::Initialize()
     mDirectionalLight.specular = { 0.9f, 0.9f, 0.9f, 1.0f };
 
     mCharacter.Initialize("Character01/Character01.model");
+    mCharacter02.Initialize("Character02/Character02.model");
+    mCharacter03.Initialize("Character03/Character03.model");
 
     Mesh groundMesh = MeshBuilder::CreatePlane(10, 10, 1.0f);
     mGround.meshBuffer.Initialize(groundMesh);
     mGround.diffuseMapId = TextureManager::Get()->LoadTexture("misc/concrete.jpg");
 
+    Mesh cubeMesh = MeshBuilder::CreateSphere(20, 20, 1.0f);
+	mSphere01.meshBuffer.Initialize(cubeMesh);
+
+    Mesh sphereMesh = MeshBuilder::CreateSphere(20, 20, 1.0f);
+	mSphere02.meshBuffer.Initialize(sphereMesh);
+
+
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFile);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
+    mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
+    mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
 
     mShadowEffect.Initialize();
     mShadowEffect.SetDirectionalLight(mDirectionalLight);
+
+    // move characters
+    mCharacter.transform.position = { 0.0f, 0.0f, 0.0f };
+    mCharacter02.transform.position = { 2.5f, 0.0f, 0.0f };
+    mCharacter03.transform.position = { -2.5f, 0.0f, 0.0f };
+
+    // move cube and sphere
+	mSphere01.transform.position = { 2.0f, 2.0f, -2.0f };
+	mSphere02.transform.position = { -4.0f, 3.0f, -2.0f };
 }
 void GameState::Terminate()
 {
 	mShadowEffect.Terminate();
     mStandardEffect.Terminate();
+    mCharacter03.Terminate();
+    mCharacter02.Terminate();
     mCharacter.Terminate();
+    mSphere01.Terminate();
+    mSphere02.Terminate();
     mGround.Terminate();
 }
 void GameState::Update(float deltaTime)
@@ -43,10 +67,18 @@ void GameState::Render()
 {
     mShadowEffect.Begin();
 		mShadowEffect.Render(mCharacter);
+		mShadowEffect.Render(mCharacter02);
+		mShadowEffect.Render(mCharacter03);
+		mShadowEffect.Render(mSphere01);
+		mShadowEffect.Render(mSphere02);
 	mShadowEffect.End();
 
     mStandardEffect.Begin();
         mStandardEffect.Render(mCharacter);
+        mStandardEffect.Render(mCharacter02);
+        mStandardEffect.Render(mCharacter03);
+		mStandardEffect.Render(mSphere01);
+		mStandardEffect.Render(mSphere02);
         mStandardEffect.Render(mGround);
     mStandardEffect.End();
 }
