@@ -27,6 +27,7 @@
 #include "Texture.h"
 #include "TextureManager.h"
 #include "Transform.h"
+#include "ShadowEffect.h"
 #include "SimpleDraw.h"
 #include "VertexShader.h"
 #include "VertexTypes.h"
