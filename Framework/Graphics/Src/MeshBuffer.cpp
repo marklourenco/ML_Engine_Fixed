@@ -61,8 +61,6 @@ void MeshBuffer::Render() const
     {
         context->Draw(static_cast<UINT>(mVertexCount), 0);
     }
-
-    context->Draw(static_cast<UINT>(mVertexCount), 0);
 }
 
 void MeshBuffer::CreateVertexBuffer(const void* vertices, uint32_t vertexSize, uint32_t vertexCount)

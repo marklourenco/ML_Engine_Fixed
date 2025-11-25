@@ -49,7 +49,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 position : SV_POSITION;
+    float4 position : SV_Position;
     float3 worldNormal : NORMAL;
     float3 dirToLight : TEXCOORD0;
     float3 dirToView : TEXCOORD1;
@@ -76,7 +76,7 @@ VS_OUTPUT VS(VS_INPUT input)
     return output;
 }
 
-float4 PS(VS_OUTPUT input) : SV_TARGET
+float4 PS(VS_OUTPUT input) : SV_Target
 {
     float3 n = normalize(input.worldNormal);
     float3 light = normalize(input.dirToLight);

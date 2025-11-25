@@ -182,6 +182,6 @@ void GameState::UpdateCamera(float deltaTime)
     if (height >= 0.0f)
     {
         cameraPosition.y = height + 1.5f;
-        //mCamera.SetPosition(cameraPosition);
+        mCamera.SetPosition(cameraPosition);
     }
 }
