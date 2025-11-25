@@ -20,7 +20,8 @@ void GameState::Initialize()
 
     mTerrain.Initialize(L"../../Assets/Textures/terrain/heightmap_512x512.raw",20.0f);
     mGround.meshBuffer.Initialize(mTerrain.mesh);
-    mGround.diffuseMapId = TextureManager::Get()->LoadTexture("misc/concrete.jpg");
+    mGround.diffuseMapId = TextureManager::Get()->LoadTexture("terrain/dirt_seamless.jpg");
+    mGround.specMapId = TextureManager::Get()->LoadTexture("terrain/grass_2048.jpg");
 
     Mesh cubeMesh = MeshBuilder::CreateSphere(20, 20, 1.0f);
 	mSphere01.meshBuffer.Initialize(cubeMesh);
@@ -39,6 +40,12 @@ void GameState::Initialize()
     mShadowEffect.Initialize();
     mShadowEffect.SetDirectionalLight(mDirectionalLight);
 
+    mTerrainEffect.Initialize();
+	mTerrainEffect.SetCamera(mCamera);
+	mTerrainEffect.SetLightCamera(mShadowEffect.GetLightCamera());
+	mTerrainEffect.SetDirectionalLight(mDirectionalLight);
+	mTerrainEffect.SetShadowMap(mShadowEffect.GetDepthMap());
+
     // move characters
     mCharacter.transform.position = { 0.0f, 0.0f, 0.0f };
     mCharacter02.transform.position = { 2.5f, 0.0f, 0.0f };
@@ -50,6 +57,7 @@ void GameState::Initialize()
 }
 void GameState::Terminate()
 {
+    mTerrainEffect.Terminate();
 	mShadowEffect.Terminate();
     mStandardEffect.Terminate();
     mCharacter03.Terminate();
@@ -73,13 +81,16 @@ void GameState::Render()
 		mShadowEffect.Render(mSphere02);
 	mShadowEffect.End();
 
+    mTerrainEffect.Begin();
+		mTerrainEffect.Render(mGround);
+	mTerrainEffect.End();
+
     mStandardEffect.Begin();
         mStandardEffect.Render(mCharacter);
         mStandardEffect.Render(mCharacter02);
         mStandardEffect.Render(mCharacter03);
 		mStandardEffect.Render(mSphere01);
 		mStandardEffect.Render(mSphere02);
-        mStandardEffect.Render(mGround);
     mStandardEffect.End();
 }
 
@@ -122,9 +133,10 @@ void GameState::DebugUI()
 		ImGui::ColorEdit4("Specular#Material", &material.specular.r);
 		ImGui::DragFloat("Shininess#Material", &material.shininess, 0.1f, 0.1f, 1000.f);
     }
-
+    ImGui::DragFloat3("CharacterPosition", &mCharacter.transform.position.x, 0.01f);
     mStandardEffect.DebugUI();
     mShadowEffect.DebugUI();
+    mTerrainEffect.DebugUI();
     ImGui::End();
 }
 
@@ -170,6 +182,6 @@ void GameState::UpdateCamera(float deltaTime)
     if (height >= 0.0f)
     {
         cameraPosition.y = height + 1.5f;
-        mCamera.SetPosition(cameraPosition);
+        //mCamera.SetPosition(cameraPosition);
     }
 }

@@ -27,4 +27,5 @@ private:
 
 	ML_Engine::Graphics::StandardEffect mStandardEffect;
 	ML_Engine::Graphics::ShadowEffect mShadowEffect;
+	ML_Engine::Graphics::TerrainEffect mTerrainEffect;
 };

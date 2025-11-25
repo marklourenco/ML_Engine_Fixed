@@ -62,12 +62,72 @@ VS_OUTPUT VS(VS_INPUT input)
 {
     VS_OUTPUT output;
     
+    output.position = mul(float4(input.position, 1.0f), wvp);
+    output.worldNormal = mul(input.normal, (float3x3)world);
+    output.worldPosition = mul(float4(input.position, 1.0f), world);
+    output.dirToLight = -lightDirection;
+    output.dirToView = normalize(viewPosition - output.worldPosition.xyz);
+    output.texCoord = input.texCoord;
+    if(useShadowMap)
+    {
+        output.lightNDCPosition = mul(float4(input.position, 1.0f), lwvp);
+    }
+    
     return output;
 }
 
 float4 PS(VS_OUTPUT input) : SV_TARGET
 {
-    float4 finalColor = 1.0f;
+    float3 n = normalize(input.worldNormal);
+    float3 light = normalize(input.dirToLight);
+    float3 view = normalize(input.dirToView);
+    
+    // emissive
+    float4 emissive = materialEmissive;
+    
+    // ambient
+    float4 ambient = lightAmbient * materialAmbient;
+    
+    // diffuse
+    float d = saturate(dot(light, n));
+    float4 diffuse = d * lightDiffuse * materialDiffuse;
+    
+    // specular
+    float r = reflect(-light, n);
+    float base = saturate(dot(r, view));
+    float s = pow(base, materialShininess);
+    float4 specular = s * lightSpecular * materialSpecular;
+    
+    float4 lowMapColor = lowTextureMap.Sample(textureSampler, input.texCoord);
+    float4 highMapColor = highTextureMap.Sample(textureSampler, input.texCoord);
+    float4 diffuseColor = lowMapColor;
+    if(input.worldPosition.y > lowHeight + blendHeight)
+    {
+        diffuseColor = highMapColor;
+    }
+    else
+    {
+        float t = saturate((input.worldPosition.y - lowHeight) / blendHeight);
+        diffuseColor = lerp(lowMapColor, highMapColor, t);
+    }
+    
+    float4 finalColor = (emissive + ambient + diffuse) * diffuseColor + specular;
+    if(useShadowMap)
+    {
+        float actualDepth = 1.0f - (input.lightNDCPosition.z / input.lightNDCPosition.w);
+        float2 shadowUV = input.lightNDCPosition.xy / input.lightNDCPosition.w;
+        float u = (shadowUV.x + 1.0f) * 0.5f;
+        float v = 1.0f - ((shadowUV.y + 1.0f) * 0.5f);
+        if(saturate(u) == u && saturate(v) == v)
+        {
+            float4 savedColor = shadowMap.Sample(textureSampler, float2(u, v));
+            float savedDepth = savedColor.r;
+            if(savedDepth > actualDepth + depthBias)
+            {
+                finalColor = (emissive + ambient) * diffuseColor;
+            }
+        }
+    }
     
     return finalColor;
 }
