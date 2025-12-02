@@ -1,0 +1,64 @@
+#pragma once
+
+#include "ConstantBuffer.h"
+#include "PixelShader.h"
+#include "VertexShader.h"
+#include "Sampler.h"
+
+namespace ML_Engine::Graphics
+{
+	class RenderObject;
+	class Texture;
+
+	class Infrared
+	{
+	public:
+		enum class Mode
+		{
+			None,
+			Infrared
+		};
+
+		void Initialize(const std::filesystem::path& filePath);
+		void Terminate();
+
+		void Begin(float time = 0.0f);
+		void End();
+
+		void Render(const RenderObject& renderObject);
+
+		void SetTexture(const Texture* texture, uint32_t slot = 0);
+		void SetMode(Mode mode);
+
+		void DebugUI();
+	private:
+		struct InfraredData
+		{
+			int mode = 0;
+			float param0 = 0.0f;
+			float param1 = 0.0f;
+			float param2 = 0.0f;
+		};
+
+		using InfraredBuffer = TypedConstantBuffer<InfraredData>;
+		InfraredBuffer mInfraredBuffer;
+
+		VertexShader mVertexShader;
+		PixelShader mPixelShader;
+		Sampler mSampler;
+		std::array<const Texture*, 4> mTextures;
+
+		Mode mMode = Mode::None;
+		float mMirrorScaleX = -1.0f;
+		float mMirrorScaleY = -1.0f;
+		float mBlurStrength = 5.0f;
+		float mCombine2Alpha = 0.0f;
+
+		float mAberrationValue = 0.005f;
+		float mWaveLength = 0.05f;
+		float mNumWaves = 20.0f;
+
+		float mHeatWaveIntensity = 0.025f; // shimmer
+		float mBlur = 2.0f; // blur strength
+	};
+}

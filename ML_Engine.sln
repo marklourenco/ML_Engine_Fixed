@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ML_Engine", "Engine\ML_Engine.vcxproj", "{1DD11EC8-0E31-4A0D-885B-8F20F05AAD75}"
 EndProject
@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{8B2C
 		Assets\Shaders\DoSomething.fx = Assets\Shaders\DoSomething.fx
 		Assets\Shaders\DoTexture.fx = Assets\Shaders\DoTexture.fx
 		Assets\Shaders\DoTransformColor.fx = Assets\Shaders\DoTransformColor.fx
+		Assets\Shaders\Infrared.fx = Assets\Shaders\Infrared.fx
 		Assets\Shaders\PostProcessing.fx = Assets\Shaders\PostProcessing.fx
 		Assets\Shaders\Shadow.fx = Assets\Shaders\Shadow.fx
 		Assets\Shaders\SimpleDraw.fx = Assets\Shaders\SimpleDraw.fx
@@ -76,6 +77,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "14_HelloShadow", "VGP330\14_HelloShadow\14_HelloShadow.vcxproj", "{764E9141-9EDC-48E4-884D-BA739742FE28}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "15_HelloTerrain", "VGP330\15_HelloTerrain\15_HelloTerrain.vcxproj", "{FE1FF810-AFC2-47C7-9050-265A8F195A51}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "16_HelloInfrared", "VGP330\16_HelloInfrared\16_HelloInfrared.vcxproj", "{F5560451-22DD-4020-BEA4-D37BD1343AB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -269,6 +272,14 @@ Global
 		{FE1FF810-AFC2-47C7-9050-265A8F195A51}.Release|x64.Build.0 = Release|x64
 		{FE1FF810-AFC2-47C7-9050-265A8F195A51}.Release|x86.ActiveCfg = Release|Win32
 		{FE1FF810-AFC2-47C7-9050-265A8F195A51}.Release|x86.Build.0 = Release|Win32
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Debug|x64.ActiveCfg = Debug|x64
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Debug|x64.Build.0 = Debug|x64
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Debug|x86.ActiveCfg = Debug|Win32
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Debug|x86.Build.0 = Debug|Win32
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Release|x64.ActiveCfg = Release|x64
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Release|x64.Build.0 = Release|x64
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Release|x86.ActiveCfg = Release|Win32
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -298,6 +309,7 @@ Global
 		{ED5AFDB5-5E22-46ED-A61B-1B70983B9AAA} = {750D0B0E-7E17-4919-A13C-D6E5C3098406}
 		{764E9141-9EDC-48E4-884D-BA739742FE28} = {750D0B0E-7E17-4919-A13C-D6E5C3098406}
 		{FE1FF810-AFC2-47C7-9050-265A8F195A51} = {750D0B0E-7E17-4919-A13C-D6E5C3098406}
+		{F5560451-22DD-4020-BEA4-D37BD1343AB3} = {750D0B0E-7E17-4919-A13C-D6E5C3098406}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D97CCC11-9EBE-41ED-A727-A06D5C430B60}
