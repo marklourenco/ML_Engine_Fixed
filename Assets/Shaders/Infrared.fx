@@ -51,27 +51,25 @@ float4 PS(VS_OUTPUT input) : SV_Target
         float shimmer = sin((uv.y * 40.0f) + param0 * 10.0f) * param1;
         float2 distortedUV = uv + shimmer * float2(0.02f, 0.02f);
         
-        // sample neighbor for blur
-        float2 texel = float2(param2 / 1024.0f, param2 / 768.0f); // render size
-        float3 sum = 0.0f;
-        float weight = 0.0f;
-        
-        // 3x3 gaussian weights
-        float kernel[3] = { 0.27901f, 0.44198f, 0.27901f };
+        // box blur
 
-        for (int x = -1; x <= 1; ++x)
-        {
-            for (int y = -1; y <= 1; ++y)
-            {
-                float w = kernel[abs(x)] * kernel[abs(y)];
-                sum += textureMap0.Sample(textureSampler, distortedUV + texel * float2(x, y)).rgb * w;
-                weight += w;
-            }
-        }
-        
-        float3 blurredColor = sum / weight;
+        float2 texel = float2(param2 / 1024.0f, param2 / 768.0f);
 
-        // calculate brightness | RGB -? Luminance
+        float3 blurredColor =
+        textureMap0.Sample(textureSampler, distortedUV).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(texel.x, 0.0f)).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(-texel.x, 0.0f)).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(0.0f, texel.y)).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(0.0f, -texel.y)).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(texel.x, texel.y)).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(texel.x, -texel.y)).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(-texel.x, texel.y)).rgb +
+        textureMap0.Sample(textureSampler, distortedUV + float2(-texel.x, -texel.y)).rgb;
+
+        blurredColor *= (1.0f / 9.0f);
+
+
+        // calculate brightness | x RGB  y Luminance
         float brightness = dot(blurredColor, float3(0.299f, 0.587f, 0.114f));
 
         // push brightness down to keep average areas cooler
@@ -106,6 +104,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
         
         float4 color0 = finalColor;
         float4 color1 = textureMap1.Sample(textureSampler, input.texCoord);
+        
         color1.a *= 1; // alpha of predatorHUD
         finalColor = (color0 * (1.0f - color1.a)) + (color1 * color1.a);
 
