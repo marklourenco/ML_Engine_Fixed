@@ -4,9 +4,6 @@ using namespace ML_Engine;
 using namespace ML_Engine::Graphics;
 using namespace ML_Engine::Input;
 
-static int currentObject = 0;
-const char* objects[] = { "earth", "rocks", "bricks" };
-
 void GameState::Initialize()
 {
     mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
@@ -17,10 +14,23 @@ void GameState::Initialize()
     mDirectionalLight.diffuse = { 0.7f, 0.7f, 0.7f, 1.0f };
     mDirectionalLight.specular = { 0.9f, 0.9f, 0.9f, 1.0f };
 
-    Mesh mesh = MeshBuilder::CreateSphere(30, 30, 0.25f);
-    mRenderObject.meshBuffer.Initialize(mesh);
+	MeshPC mesh = MeshBuilder::CreatePyramidPC(1.0f);
+    mRenderObjectPyramid.meshBuffer.Initialize(mesh);
     TextureManager* tm = TextureManager::Get();
-    mRenderObject.diffuseMapId = tm->LoadTexture("earth.jpg");
+    mRenderObjectPyramid.diffuseMapId = tm->LoadTexture("bricks.jpg");
+
+	MeshPC meshPlatform = MeshBuilder::CreateRectanglePC(3.0f, 0.1f, 0.5f);
+	mRenderObjectPlatform.meshBuffer.Initialize(meshPlatform);
+	mRenderObjectPlatform.diffuseMapId = tm->LoadTexture("bricks.jpg");
+	mRenderObjectPlatform.transform.position = { 0.0f, 0.5f, 0.0f };
+
+	MeshPC meshBall1 = MeshBuilder::CreateSpherePC(10.0f, 10.0f, 0.3f);
+	mRenderObjectBall1.meshBuffer.Initialize(meshBall1);
+	mRenderObjectBall1.diffuseMapId = tm->LoadTexture("earth.jpg");
+
+    MeshPC meshBall2 = MeshBuilder::CreateSpherePC(10.0f, 10.0f, 0.3f);
+    mRenderObjectBall2.meshBuffer.Initialize(meshBall2);
+    mRenderObjectBall2.diffuseMapId = tm->LoadTexture("earth.jpg");
 
     Mesh meshFloor = MeshBuilder::CreatePlane(3, 3, 3);
     mRenderObjectFloor.meshBuffer.Initialize(meshFloor);
@@ -29,38 +39,58 @@ void GameState::Initialize()
     mRenderObjectFloor.normalMapId = tm->LoadTexture("bricks_normal.jpg");
     mRenderObjectFloor.bumpMapId = tm->LoadTexture("bricks_bump.jpg");
 
-    Mesh meshRock = MeshBuilder::CreateSphere(30, 30, 1.0f);
-    mRenderObjectRock.meshBuffer.Initialize(meshRock);
-    mRenderObjectRock.diffuseMapId = tm->LoadTexture("rock.jpg");
-    mRenderObjectRock.specMapId = tm->LoadTexture("rock_spec.jpg");
-    mRenderObjectRock.normalMapId = tm->LoadTexture("rock_normal.jpg");
-    mRenderObjectRock.bumpMapId = tm->LoadTexture("rock_bump.jpg");
-
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFile);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
     mAnimationTime = 0.0f;
+	// platform animation
     mAnimation = AnimationBuilder()
-        .AddPositionKey({ 0.0f, 0.0f, 0.0f }, 0.0f)
-        .AddPositionKey({ 0.0f, 2.0f, 0.0f }, 3.0f)
-        .AddPositionKey({ 0.0f, 0.0f, 0.0f }, 5.0f)
-        .AddRotationKey(Math::Quaternion::Identity, 0.0f)
-		.AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90.0f * Math::Constants::DegToRad), 2.0f)
-		.AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 180.0f * Math::Constants::DegToRad), 3.0f)
-		.AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 270.0f * Math::Constants::DegToRad), 4.0f)
-		.AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 360.0f * Math::Constants::DegToRad), 5.0f)
-        .AddScaleKey(Math::Vector3::One, 0.0f)
-        .AddScaleKey(Math::Vector3::One * 0.01f, 3.0f)
-		.AddScaleKey(Math::Vector3::One, 5.0f)
+        .AddPositionKey({ 0.0f, 0.5f, 0.0f }, 0.0f)
+        .AddPositionKey({ 0.0f, 0.5f, 0.0f }, 15.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::ZAxis, 15.0f * Math::Constants::DegToRad), 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::ZAxis, -15.0f * Math::Constants::DegToRad), 3.75f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::ZAxis, 15.0f * Math::Constants::DegToRad), 7.5f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::ZAxis, -15.0f * Math::Constants::DegToRad), 11.25f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::ZAxis, 15.0f * Math::Constants::DegToRad), 15.0f)
         .Build();
+
+	// ball1 animation
+    mAnimation2 = AnimationBuilder()
+		.AddPositionKey({ -1.0f, 0.5f, 0.0f }, 0.0f)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 0.0f)
+		.AddPositionKey({ -1.0f, 0.9f, 0.0f }, 3.75f)
+        .AddScaleKey({ 0.5f, 0.5f, 0.5f }, 3.75f)
+		.AddPositionKey({ -1.0f, 0.5f, 0.0f }, 7.5f)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 7.5f)
+		.AddPositionKey({ -1.0f, 0.9f, 0.0f }, 11.25f)
+        .AddScaleKey({ 0.5f, 0.5f, 0.5f }, 11.25f)
+		.AddPositionKey({ -1.0f, 0.5f, 0.0f }, 15.0f)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 15.0f)
+        .Build();
+
+	// ball2 animation
+    mAnimation3 = AnimationBuilder()
+        .AddPositionKey({ 1.0f, 0.9f, 0.0f }, 0.0f)
+        .AddScaleKey({ 0.5f, 0.5f, 0.5f }, 0.0f)
+        .AddPositionKey({ 1.0f, 0.5f, 0.0f }, 3.75f)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 3.75f)
+		.AddPositionKey({ 1.0f, 0.9f, 0.0f }, 7.5f)
+        .AddScaleKey({ 0.5f, 0.5f, 0.5f }, 7.5f)
+		.AddPositionKey({ 1.0f, 0.5f, 0.0f }, 11.25f)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 11.25f)
+		.AddPositionKey({ 1.0f, 0.9f, 0.0f }, 15.0f)
+        .AddScaleKey({ 0.5f, 0.5f, 0.5f }, 15.0f)
+		.Build();
 }
 void GameState::Terminate()
 {
-    mRenderObject.Terminate();
+    mRenderObjectPyramid.Terminate();
+	mRenderObjectPlatform.Terminate();
+	mRenderObjectBall1.Terminate();
+	mRenderObjectBall2.Terminate();
     mRenderObjectFloor.Terminate();
-    mRenderObjectRock.Terminate();
     mStandardEffect.Terminate();
 }
 void GameState::Update(float deltaTime)
@@ -75,33 +105,24 @@ void GameState::Update(float deltaTime)
 }
 void GameState::Render()
 {
-	mRenderObject.transform = mAnimation.GetTransform(mAnimationTime);
+	mRenderObjectPlatform.transform = mAnimation.GetTransform(mAnimationTime);
+	mRenderObjectBall1.transform = mAnimation2.GetTransform(mAnimationTime);
+	mRenderObjectBall2.transform = mAnimation3.GetTransform(mAnimationTime);
     SimpleDraw::AddGroundPlane(10.0f, Colors::DarkGray);
     SimpleDraw::Render(mCamera);
 
     mStandardEffect.Begin();
-    switch (currentObject)
-    {
-    case 0:
-        mStandardEffect.Render(mRenderObject);
-        break;
-    case 1:
-        mStandardEffect.Render(mRenderObjectRock);
-        break;
-    case 2:
+        mStandardEffect.Render(mRenderObjectPyramid);
+		mStandardEffect.Render(mRenderObjectPlatform);
+		mStandardEffect.Render(mRenderObjectBall1);
+		mStandardEffect.Render(mRenderObjectBall2);
         mStandardEffect.Render(mRenderObjectFloor);
-        break;
-    }
     mStandardEffect.End();
 }
 
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-    if(ImGui::CollapsingHeader("Object", ImGuiTreeNodeFlags_DefaultOpen))
-    {
-        ImGui::Combo("Object Shown", &currentObject, objects, IM_ARRAYSIZE(objects));
-    }
 
     if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
     {
@@ -112,14 +133,6 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Ambient#Light", &mDirectionalLight.ambient.r);
         ImGui::ColorEdit4("Diffuse#Light", &mDirectionalLight.diffuse.r);
         ImGui::ColorEdit4("Specular#Light", &mDirectionalLight.specular.r);
-    }
-    if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
-    {
-        ImGui::ColorEdit4("Emissive#Material", &mRenderObject.material.emissive.r);
-        ImGui::ColorEdit4("Ambient#Material", &mRenderObject.material.ambient.r);
-        ImGui::ColorEdit4("Diffuse#Material", &mRenderObject.material.diffuse.r);
-        ImGui::ColorEdit4("Specular#Material", &mRenderObject.material.specular.r);
-        ImGui::DragFloat("Shininess#Material", &mRenderObject.material.shininess, 0.01f, 0.0f, 10000.0f);
     }
 
     ImGui::Separator();
