@@ -8,6 +8,8 @@
 
 namespace ML_Engine::Graphics
 {
+	struct Skeleton;
+
 	class RenderObject
 	{
 	public:
@@ -31,5 +33,6 @@ namespace ML_Engine::Graphics
 		ModelId modelId;
 		Transform transform;
 		std::vector<RenderObject> renderObjects;
+		const Skeleton* skeleton;
 	};
 }
