@@ -10,11 +10,14 @@ using namespace ML_Engine::Graphics;
 // empty namespace for global functions isolated to the cpp file
 namespace
 {
-	void ComputeBoneTransformsRecursive(const Bone* bone, AnimationUtil::BoneTransforms& boneTransforms)
+	void ComputeBoneTransformsRecursive(const Bone* bone, AnimationUtil::BoneTransforms& boneTransforms, const Animator* animator)
 	{
 		if (bone != nullptr)
 		{
-			boneTransforms[bone->index] = bone->toParentTransform;
+			if (animator == nullptr || !animator->GetToParentTransform(bone, boneTransforms[bone->index]))
+			{
+				boneTransforms[bone->index] = bone->toParentTransform;
+			}
 			// if there is a parent, apply the parent's transforms as well
 			if (bone->parent != nullptr)
 			{
@@ -22,13 +25,13 @@ namespace
 			}
 			for (const Bone* child : bone->children)
 			{
-				ComputeBoneTransformsRecursive(child, boneTransforms);
+				ComputeBoneTransformsRecursive(child, boneTransforms, animator);
 			}
 		}
 	}
 }
 
-void AnimationUtil::ComputeBoneTransforms(ModelId modelId, BoneTransforms& boneTransforms)
+void AnimationUtil::ComputeBoneTransforms(ModelId modelId, BoneTransforms& boneTransforms, const Animator* animator)
 {
 	const Model* model = ModelManager::Get()->GetModel(modelId);
 	if (model != nullptr && model->skeleton != nullptr)
@@ -36,7 +39,7 @@ void AnimationUtil::ComputeBoneTransforms(ModelId modelId, BoneTransforms& boneT
 		// resize to sync the number of bones with the matrices
 		boneTransforms.resize(model->skeleton->bones.size());
 		// generate the matrices
-		ComputeBoneTransformsRecursive(model->skeleton->root, boneTransforms);
+		ComputeBoneTransformsRecursive(model->skeleton->root, boneTransforms, animator);
 	}
 }
 
