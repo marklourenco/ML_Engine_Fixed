@@ -3,6 +3,7 @@
 using namespace ML_Engine;
 using namespace ML_Engine::Graphics;
 using namespace ML_Engine::Input;
+using namespace ML_Engine::Physics;
 
 void GameState::Initialize()
 {
@@ -33,9 +34,44 @@ void GameState::Initialize()
     mStandardEffect.Initialize(shaderFile);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
+
+	Mesh boxShape = MeshBuilder::CreateCube(1.0f);
+	TextureId boxTexture = tm->LoadTexture("earth.jpg");
+
+    float yOffset = 4.5f;
+	float xOffset = 0.0f;
+    int rowCount = 1;
+	int boxIndex = 0;
+    mBoxes.resize(10);
+    while (boxIndex < mBoxes.size())
+    {
+		xOffset = -((static_cast<float>(rowCount) - 1.0f) * 0.5f);
+        for (int r = 0; r < rowCount; ++r)
+        {
+			BoxData& box = mBoxes[boxIndex];
+			box.box.meshBuffer.Initialize(boxShape);
+			box.box.diffuseMapId = boxTexture;
+			box.box.transform.position = { xOffset, yOffset, 4.0f };
+			box.shape.InitializeBox({ 0.5f, 0.5f, 0.5f });
+            xOffset += 1.0f;
+            ++boxIndex;
+        }
+		yOffset -= 1.0f;
+        rowCount += 1;
+    }
+    for (int i = mBoxes.size() - 1; i >= 0 ; --i)
+    {
+		mBoxes[i].rigidBody.Initialize(mBoxes[i].box.transform, mBoxes[i].shape, 4.0f);
+	}
 }
 void GameState::Terminate()
 {
+    for (BoxData& box : mBoxes)
+    {
+		box.rigidBody.Terminate();
+		box.shape.Terminate();
+		box.box.Terminate();
+    }
 	mBallObject.Terminate();
     mGroundObject.Terminate();
     mStandardEffect.Terminate();
@@ -47,6 +83,12 @@ void GameState::Terminate()
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
+    if (InputSystem::Get()->IsMousePressed(MouseButton::LBUTTON))
+    {
+		Math::Vector3 spawnPos = mCamera.GetPosition() + (mCamera.GetDirection() * 0.5f);
+		mBallRigidBody.SetPosition(spawnPos);
+		mBallRigidBody.SetVelocity(mCamera.GetDirection() * 20.0f);
+	}
 }
 void GameState::Render()
 {
@@ -55,6 +97,10 @@ void GameState::Render()
     mStandardEffect.Begin();
 		mStandardEffect.Render(mBallObject);
         mStandardEffect.Render(mGroundObject);
+        for (BoxData& box : mBoxes)
+        {
+			mStandardEffect.Render(box.box);
+        }
     mStandardEffect.End();
 }
 
@@ -86,7 +132,10 @@ void GameState::DebugUI()
         mBallRigidBody.SetPosition(mBallObject.transform.position);
 	}
 
+	PhysicsWorld::Get()->DebugUI();
+
     ImGui::End();
+	SimpleDraw::Render(mCamera);
 }
 
 void GameState::UpdateCamera(float deltaTime)

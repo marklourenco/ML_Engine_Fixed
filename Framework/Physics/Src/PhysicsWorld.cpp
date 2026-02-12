@@ -43,7 +43,8 @@ void PhysicsWorld::Initialize(const Settings& settings)
 	mDispatcher = new btCollisionDispatcher(mCollisionConfiguration);
 	mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mInterface, mSolver, mCollisionConfiguration);
 
-	mDynamicsWorld->setGravity(ToBtVector3(mSettings.gravity));
+	mDynamicsWorld->setGravity(TobtVector3(mSettings.gravity));
+	mDynamicsWorld->setDebugDrawer(&mPhysicsDebugDraw);
 }
 void PhysicsWorld::Terminate()
 {
@@ -63,12 +64,42 @@ void PhysicsWorld::Update(float deltaTime)
 }
 void PhysicsWorld::DebugUI()
 {
-
+	if(ImGui::CollapsingHeader("Physics", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if(ImGui::DragFloat3("Gravity", &mSettings.gravity.x, 0.1f))
+		{
+			mDynamicsWorld->setGravity(TobtVector3(mSettings.gravity));
+		}
+		ImGui::Checkbox("DebugDraw", &mDebugDraw);
+		if(mDebugDraw)
+		{
+			ImGui::Indent();
+			    int debugMode = mPhysicsDebugDraw.getDebugMode();
+				bool drawWireFrame = (debugMode & btIDebugDraw::DBG_DrawWireframe);
+				if (ImGui::Checkbox("DrawWireFrame", &drawWireFrame))
+				{
+					debugMode = (drawWireFrame) ? debugMode | btIDebugDraw::DBG_DrawWireframe : debugMode & ~btIDebugDraw::DBG_DrawWireframe;
+				}
+				bool drawAABB = (debugMode & btIDebugDraw::DBG_DrawAabb);
+				if (ImGui::Checkbox("DrawAABB", &drawAABB))
+				{
+					debugMode = (drawAABB) ? debugMode | btIDebugDraw::DBG_DrawAabb : debugMode & ~btIDebugDraw::DBG_DrawAabb;
+				}
+				bool drawContactPoints = (debugMode & btIDebugDraw::DBG_DrawContactPoints);
+				if (ImGui::Checkbox("DrawContactPoints", &drawContactPoints))
+				{
+					debugMode = (drawContactPoints) ? debugMode | btIDebugDraw::DBG_DrawContactPoints : debugMode & ~btIDebugDraw::DBG_DrawContactPoints;
+				}
+				mPhysicsDebugDraw.setDebugMode(debugMode);
+				mDynamicsWorld->debugDrawWorld();
+			ImGui::Unindent();
+		}
+	}
 }
 void PhysicsWorld::SetGravity(const Math::Vector3& gravity)
 {
 	mSettings.gravity = gravity;
-	mDynamicsWorld->setGravity(ToBtVector3(mSettings.gravity));
+	mDynamicsWorld->setGravity(TobtVector3(mSettings.gravity));
 }
 void PhysicsWorld::Register(PhysicsObject* physicsObject)
 {

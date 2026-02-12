@@ -27,7 +27,7 @@ void CollisionShape::InitializeCapsule(float radius, float height)
 void CollisionShape::InitializeBox(const Math::Vector3& halfExtents)
 {
 	ASSERT(mCollisionShape == nullptr, "CollisionShape: is already initialized.");
-	mCollisionShape = new btBoxShape(ToBtVector3(halfExtents));
+	mCollisionShape = new btBoxShape(TobtVector3(halfExtents));
 }
 void CollisionShape::InitializeHull(const Math::Vector3& halfExtents, const Math::Vector3& origin)
 {
@@ -46,7 +46,7 @@ void CollisionShape::InitializeHull(const Math::Vector3& halfExtents, const Math
 	};
 	for (Math::Vector3& point : points)
 	{
-		hullShape->addPoint(ToBtVector3(point + origin), false);
+		hullShape->addPoint(TobtVector3(point + origin), false);
 	}
 	hullShape->recalcLocalAabb();
 	mCollisionShape = hullShape;

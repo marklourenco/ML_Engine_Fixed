@@ -35,7 +35,7 @@ void RigidBody::SetPosition(const Math::Vector3& position)
 void RigidBody::SetVelocity(const Math::Vector3& velocity)
 {
 	mRigidBody->activate();
-	mRigidBody->setLinearVelocity(ToBtVector3(velocity));
+	mRigidBody->setLinearVelocity(TobtVector3(velocity));
 }
 const Math::Vector3 RigidBody::GetVelocity() const
 {

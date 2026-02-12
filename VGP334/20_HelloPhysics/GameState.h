@@ -26,5 +26,14 @@ private:
 	ML_Engine::Physics::CollisionShape mGroundShape;
 	ML_Engine::Physics::RigidBody mGroundRigidBody;
 
+	struct BoxData
+	{
+		ML_Engine::Graphics::RenderObject box;
+		ML_Engine::Physics::CollisionShape shape;
+		ML_Engine::Physics::RigidBody rigidBody;
+	};
+	using Boxes = std::vector<BoxData>;
+	Boxes mBoxes;
+
 	ML_Engine::Graphics::StandardEffect mStandardEffect;
 };

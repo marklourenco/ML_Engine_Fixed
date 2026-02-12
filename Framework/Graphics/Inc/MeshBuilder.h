@@ -10,6 +10,7 @@ namespace ML_Engine::Graphics
 		// cube
 		static MeshPC CreateCubePC(float size, const Color& color);
 		static MeshPC CreateCubePC(float size);
+		static Mesh CreateCube(float size);
 
 		// pyramid
 		static MeshPC CreatePyramidPC(float size);

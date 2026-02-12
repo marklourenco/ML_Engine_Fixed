@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PhysicsDebugDraw.h"
+
 namespace ML_Engine::Physics
 {
 	class PhysicsObject;
@@ -47,5 +49,8 @@ namespace ML_Engine::Physics
 
 		using PhysicsObjects = std::vector<PhysicsObject*>;
 		PhysicsObjects mPhysicsObjects;
+
+		PhysicsDebugDraw mPhysicsDebugDraw;
+		bool mDebugDraw = false;
 	};
 }

@@ -20,7 +20,7 @@ inline void SafeDelete(T*& ptr)
 	}
 }
 
-inline btVector3 ToBtVector3(const ML_Engine::Math::Vector3& v)
+inline btVector3 TobtVector3(const ML_Engine::Math::Vector3& v)
 {
 	return btVector3(v.x, v.y, v.z);
 }
@@ -56,5 +56,5 @@ inline Graphics::Color ToColor(const btVector3& c)
 }
 inline btTransform ConvertTobtTransform(const Graphics::Transform& t)
 {
-	return btTransform(TobtQuaternion(t.rotation), ToBtVector3(t.position));
+	return btTransform(TobtQuaternion(t.rotation), TobtVector3(t.position));
 }
