@@ -38,10 +38,15 @@ void PhysicsWorld::Initialize(const Settings& settings)
 	mSettings = settings;
 	mInterface = new btDbvtBroadphase();
 	mSolver = new btSequentialImpulseConstraintSolver();
-
+#ifdef USE_SOFT_BODY
+	mCollisionConfiguration = new btSoftBodyRigidBodyCollisionConfiguration();
+	mDispatcher = new btCollisionDispatcher(mCollisionConfiguration);
+	mDynamicsWorld = new btSoftRigidDynamicsWorld(mDispatcher, mInterface, mSolver, mCollisionConfiguration);
+#else
 	mCollisionConfiguration = new btDefaultCollisionConfiguration();
 	mDispatcher = new btCollisionDispatcher(mCollisionConfiguration);
 	mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mInterface, mSolver, mCollisionConfiguration);
+#endif
 
 	mDynamicsWorld->setGravity(TobtVector3(mSettings.gravity));
 	mDynamicsWorld->setDebugDrawer(&mPhysicsDebugDraw);
@@ -108,6 +113,12 @@ void PhysicsWorld::Register(PhysicsObject* physicsObject)
 	if (iter == mPhysicsObjects.end())
 	{
 		mPhysicsObjects.push_back(physicsObject);
+#ifdef USE_SOFT_BODY
+		if (physicsObject->GetSoftBody() != nullptr)
+		{
+			mDynamicsWorld->addSoftBody(physicsObject->GetSoftBody());
+		}
+#endif
 		if (physicsObject->GetRigidBody() != nullptr)
 		{
 			mDynamicsWorld->addRigidBody(physicsObject->GetRigidBody());
@@ -120,6 +131,12 @@ void PhysicsWorld::Unregister(PhysicsObject* physicsObject)
 	// if iter is NOT the end, it IS in the list, unregister means we want to remove it, we found it so we can remove now
 	if (iter != mPhysicsObjects.end())
 	{
+#ifdef USE_SOFT_BODY
+		if (physicsObject->GetSoftBody() != nullptr)
+		{
+			mDynamicsWorld->removeSoftBody(physicsObject->GetSoftBody());
+		}
+#endif
 		if (physicsObject->GetRigidBody() != nullptr)
 		{
 			mDynamicsWorld->removeRigidBody(physicsObject->GetRigidBody());

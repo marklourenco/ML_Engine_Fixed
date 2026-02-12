@@ -21,7 +21,7 @@ void GameState::Initialize()
 	mBallObject.meshBuffer.Initialize(meshBall1);
 	mBallObject.diffuseMapId = tm->LoadTexture("earth.jpg");
     mBallObject.transform.position.y = 3.0f;
-	mBallShape.InitializeSphere(0.3f);
+	mBallShape.InitializeSphere(0.5f);
 	mBallRigidBody.Initialize(mBallObject.transform, mBallShape, 1.0f);
 
     Mesh meshGround = MeshBuilder::CreatePlane(10, 10, 1.0f, true);
@@ -63,9 +63,26 @@ void GameState::Initialize()
     {
 		mBoxes[i].rigidBody.Initialize(mBoxes[i].box.transform, mBoxes[i].shape, 4.0f);
 	}
+
+    int rows = 10;
+    int cols = 10;
+	mClothMesh = MeshBuilder::CreatePlane(rows, cols, 0.5f);
+    for (Graphics::Vertex& v : mClothMesh.vertices)
+    {
+        v.position.y += 10.0f;
+        v.position.z += 5.0f;
+	}
+	uint32_t lastVertex = mClothMesh.vertices.size() - 1;
+	uint32_t lastVertexOS = lastVertex - cols;
+    mClothSoftBody.Initialize(mClothMesh, 1.0f, { lastVertex , lastVertexOS });
+	mCloth.meshBuffer.Initialize(nullptr, sizeof(Vertex), mClothMesh.vertices.size(),
+		mClothMesh.indices.data(), mClothMesh.indices.size());
+	mCloth.diffuseMapId = tm->LoadTexture("planets/venus.jpg");
 }
 void GameState::Terminate()
 {
+    mCloth.Terminate();
+	mClothSoftBody.Terminate();
     for (BoxData& box : mBoxes)
     {
 		box.rigidBody.Terminate();
@@ -92,11 +109,13 @@ void GameState::Update(float deltaTime)
 }
 void GameState::Render()
 {
+	mCloth.meshBuffer.Update(mClothMesh.vertices.data(), mClothMesh.vertices.size());
     SimpleDraw::Render(mCamera);
 
     mStandardEffect.Begin();
 		mStandardEffect.Render(mBallObject);
         mStandardEffect.Render(mGroundObject);
+		mStandardEffect.Render(mCloth);
         for (BoxData& box : mBoxes)
         {
 			mStandardEffect.Render(box.box);

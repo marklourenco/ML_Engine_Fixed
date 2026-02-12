@@ -9,6 +9,15 @@
 #include <Bullet/btBulletCollisionCommon.h>
 #include <Bullet/btBulletDynamicsCommon.h>
 
+// Softbody headers
+#include <Bullet/BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include <Bullet/BulletSoftBody/btSoftBodyHelpers.h>
+#include <Bullet/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
+#include <Bullet/BulletSoftBody/btSoftBodySolvers.h>
+
+// COMMENT OUT IF YOU DON'T WANT TO USE SOFT BODY
+#define USE_SOFT_BODY
+
 // Helper Functions
 template<class T>
 inline void SafeDelete(T*& ptr)

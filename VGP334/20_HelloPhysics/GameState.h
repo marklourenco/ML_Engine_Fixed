@@ -36,4 +36,9 @@ private:
 	Boxes mBoxes;
 
 	ML_Engine::Graphics::StandardEffect mStandardEffect;
+
+	// cloth info
+	ML_Engine::Graphics::RenderObject mCloth;
+	ML_Engine::Graphics::Mesh mClothMesh;
+	ML_Engine::Physics::SoftBody mClothSoftBody;
 };
