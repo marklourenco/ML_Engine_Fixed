@@ -7,6 +7,7 @@ using namespace ML_Engine::Core;
 using namespace ML_Engine::Graphics;
 using namespace ML_Engine::Input;
 using namespace ML_Engine::Physics;
+using namespace ML_Engine::Audio;
 
 void App::Run(const AppConfig& config)
 {
@@ -27,6 +28,9 @@ void App::Run(const AppConfig& config)
     SimpleDraw::StaticInitialize(config.maxVertexCount);
     TextureManager::StaticInitialize(L"../../Assets/Textures");
     ModelManager::StaticInitialize(L"../../Assets/Models");
+    EventManager::StaticInitialize();
+    AudioSystem::StaticInitialize();
+    SoundEffectManager::StaticInitialize(L"../../Assets/Audio");
 
     PhysicsWorld::Settings settings;
 	PhysicsWorld::StaticInitialize(settings);
@@ -58,6 +62,8 @@ void App::Run(const AppConfig& config)
 			mNextState = nullptr;
 		}
 
+        AudioSystem::Get()->Update();
+
 		float deltaTime = TimeUtil::GetDeltaTime();
 #if defined(_DEBUG)
         if (deltaTime < 0.5f) // primarily for handling breakpoints
@@ -80,6 +86,9 @@ void App::Run(const AppConfig& config)
     LOG("App Quit");
 	mCurrentState->Terminate();
 
+    SoundEffectManager::StaticTerminate();
+    AudioSystem::StaticTerminate();
+    EventManager::StaticTerminate();
 	PhysicsWorld::StaticTerminate();
     ModelManager::StaticTerminate();
     TextureManager::StaticTerminate();

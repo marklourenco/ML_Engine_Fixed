@@ -16,6 +16,7 @@ namespace ML_Engine::Graphics
 		T key = T();
 		float time = 0.0f;
 	};
+	using AnimationCallback = std::function<void()>;
 
 	template<class T>
 	using Keyframes = std::vector<Keyframe<T>>;
@@ -23,4 +24,5 @@ namespace ML_Engine::Graphics
 	using PositionKeys = Keyframes<Math::Vector3>;
 	using RotationKeys = Keyframes<Math::Quaternion>;
 	using ScaleKeys = Keyframes<Math::Vector3>;
+	using EventKeys = Keyframes<AnimationCallback>;
 }
