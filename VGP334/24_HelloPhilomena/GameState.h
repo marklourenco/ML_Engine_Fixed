@@ -39,4 +39,7 @@ private:
 
 	int mClipIndexPhilomena = -1;
 	float mAnimationSpeedPhilomena = 1.0f;
+
+	// timer
+	float mTimer = 0.0f;
 };
