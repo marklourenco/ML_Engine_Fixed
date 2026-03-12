@@ -28,4 +28,15 @@ private:
 		ML_Engine::Graphics::RenderObject wall;
 	};
 	std::vector<Wall> mWalls;
+
+	// paintings
+	ML_Engine::Graphics::RenderObject mLastSupperOld;
+	ML_Engine::Graphics::RenderObject mLastSupperNew;
+
+	// characters
+	ML_Engine::Graphics::RenderGroup mPhilomena;
+	ML_Engine::Graphics::Animator mAnimatorPhilomena;
+
+	int mClipIndexPhilomena = -1;
+	float mAnimationSpeedPhilomena = 1.0f;
 };

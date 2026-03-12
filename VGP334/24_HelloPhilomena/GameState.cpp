@@ -21,9 +21,12 @@ void GameState::Initialize()
     TextureManager* tm = TextureManager::Get();
     
     // ground
-    Mesh meshGround = MeshBuilder::CreatePlane(25, 25, 1.0f, true);
+    Mesh meshGround = MeshBuilder::CreatePlane(15, 15, 1.0f, true);
     mGroundObject.meshBuffer.Initialize(meshGround);
-    mGroundObject.diffuseMapId = tm->LoadTexture("misc/concrete.jpg");
+    mGroundObject.diffuseMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Diffuse.jpg");
+    mGroundObject.specMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Specular.jpg");
+    mGroundObject.bumpMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Bump.jpg");
+    mGroundObject.normalMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Normal.jpg");
 
     // walls
     int numWalls = 5;
@@ -31,62 +34,102 @@ void GameState::Initialize()
     {
         if (i == 0)
         {
-            MeshPC meshWall = MeshBuilder::CreateRectanglePC(1.0f, 5.0f, 15.0f);
+            Mesh meshWall = MeshBuilder::CreatePlane(15, 15, 1.0f, false);
             Wall& wall = mWalls.emplace_back();
             mWalls[i].wall.meshBuffer.Initialize(meshWall);
             // texture
-            mWalls[i].wall.diffuseMapId = tm->LoadTexture("misc/concrete.jpg");
+            mWalls[i].wall.diffuseMapId = tm->LoadTexture("wallpaint/Wall_Paint_Diffuse.jpg");
+            mWalls[i].wall.specMapId = tm->LoadTexture("wallpaint/Wall_Paint_Specular.jpg");
+            mWalls[i].wall.bumpMapId = tm->LoadTexture("wallpaint/Wall_Paint_Bump.jpg");
+            mWalls[i].wall.normalMapId = tm->LoadTexture("wallpaint/Wall_Paint_Normal.jpg");
             // position (side to side, up and down, front and back)
-			mWalls[i].wall.transform.position = { 5.0f, 2.5f, 0.0f };
+			mWalls[i].wall.transform.position = { 7.0f, 2.5f, 0.0f };
+            // rotate (quaternion)
+            mWalls[i].wall.transform.rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90.0f * Math::Constants::DegToRad);
         }
         else if (i == 1)
         {
-            MeshPC meshWall = MeshBuilder::CreateRectanglePC(11.0f, 5.0f, 1.0f);
+            Mesh meshWall = MeshBuilder::CreatePlane(15, 15, 1.0f, false);
             Wall& wall = mWalls.emplace_back();
             mWalls[i].wall.meshBuffer.Initialize(meshWall);
             // texture
-            mWalls[i].wall.diffuseMapId = tm->LoadTexture("misc/concrete.jpg");
+            mWalls[i].wall.diffuseMapId = tm->LoadTexture("wallpaint/Wall_Paint_Diffuse.jpg");
+            mWalls[i].wall.specMapId = tm->LoadTexture("wallpaint/Wall_Paint_Specular.jpg");
+            mWalls[i].wall.bumpMapId = tm->LoadTexture("wallpaint/Wall_Paint_Bump.jpg");
+            mWalls[i].wall.normalMapId = tm->LoadTexture("wallpaint/Wall_Paint_Normal.jpg");
             // position (side to side, up and down, front and back)
-            mWalls[i].wall.transform.position = { 0.0f, 2.5f, 8.0f };
+            mWalls[i].wall.transform.position = { 0.0f, 2.5f, 7.0f };
         }
         else if (i == 2)
         {
-            MeshPC meshWall = MeshBuilder::CreateRectanglePC(11.0f, 5.0f, 1.0f);
+            Mesh meshWall = MeshBuilder::CreatePlane(15, 15, 1.0f, false);
             Wall& wall = mWalls.emplace_back();
             mWalls[i].wall.meshBuffer.Initialize(meshWall);
             // texture
-            mWalls[i].wall.diffuseMapId = tm->LoadTexture("misc/concrete.jpg");
+            mWalls[i].wall.diffuseMapId = tm->LoadTexture("wallpaint/Wall_Paint_Diffuse.jpg");
+            mWalls[i].wall.specMapId = tm->LoadTexture("wallpaint/Wall_Paint_Specular.jpg");
+            mWalls[i].wall.bumpMapId = tm->LoadTexture("wallpaint/Wall_Paint_Bump.jpg");
+            mWalls[i].wall.normalMapId = tm->LoadTexture("wallpaint/Wall_Paint_Normal.jpg");
             // position (side to side, up and down, front and back)
-            mWalls[i].wall.transform.position = { 0.0f, 2.5f, -8.0f };
+            mWalls[i].wall.transform.position = { 0.0f, 2.5f, -7.0f };
+            // rotate (quaternion)
+            //mWalls[i].wall.transform.rotation.y = 0.707f;
+            mWalls[i].wall.transform.rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, -180.0f * Math::Constants::DegToRad);
         }
         else if (i == 3)
         {
-            MeshPC meshWall = MeshBuilder::CreateRectanglePC(1.0f, 5.0f, 4.0f);
+            Mesh meshWall = MeshBuilder::CreatePlane(15, 15, 1.0f, false);
             Wall& wall = mWalls.emplace_back();
             mWalls[i].wall.meshBuffer.Initialize(meshWall);
             // texture
-            mWalls[i].wall.diffuseMapId = tm->LoadTexture("misc/concrete.jpg");
+            mWalls[i].wall.diffuseMapId = tm->LoadTexture("wallpaint/Wall_Paint_Diffuse.jpg");
+            mWalls[i].wall.specMapId = tm->LoadTexture("wallpaint/Wall_Paint_Specular.jpg");
+            mWalls[i].wall.bumpMapId = tm->LoadTexture("wallpaint/Wall_Paint_Bump.jpg");
+            mWalls[i].wall.normalMapId = tm->LoadTexture("wallpaint/Wall_Paint_Normal.jpg");
             // position (side to side, up and down, front and back)
-            mWalls[i].wall.transform.position = { -4.0f, 2.5f, 0.0f };
+            mWalls[i].wall.transform.position = { -7.0f, 2.5f, 0.0f };
+            // rotate (quaternion)
+            mWalls[i].wall.transform.rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, -90.0f * Math::Constants::DegToRad);
         }
         else if (i == 4)
         {
-            MeshPC meshWall = MeshBuilder::CreateRectanglePC(1.0f, 5.0f, 15.0f);
+            Mesh meshWall = MeshBuilder::CreatePlane(15, 15, 1.0f, true);
             Wall& wall = mWalls.emplace_back();
             mWalls[i].wall.meshBuffer.Initialize(meshWall);
             // texture
-            mWalls[i].wall.diffuseMapId = tm->LoadTexture("misc/concrete.jpg");
+            mWalls[i].wall.diffuseMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Diffuse.jpg");
+            mWalls[i].wall.specMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Specular.jpg");
+            mWalls[i].wall.bumpMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Bump.jpg");
+            mWalls[i].wall.normalMapId = tm->LoadTexture("woodfloor/Wooden_Floor_Normal.jpg");
             // position (side to side, up and down, front and back)
-            mWalls[i].wall.transform.position = { -5.0f, 2.5f, 0.0f };
+            mWalls[i].wall.transform.position = { 0.0f, 5.0f, 0.0f };
+            // rotate (quaternion)
+            mWalls[i].wall.transform.rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::XAxis, 180.0f * Math::Constants::DegToRad);
         }
         else
         {
             MeshPC meshWall = MeshBuilder::CreateRectanglePC(2.0f, 5.0f, 2.0f);
             Wall& wall = mWalls.emplace_back();
             mWalls[i].wall.meshBuffer.Initialize(meshWall);
-            mWalls[i].wall.diffuseMapId = tm->LoadTexture("misc/concrete.jpg");
+            mWalls[i].wall.diffuseMapId = tm->LoadTexture("wallpaint/Wall_Paint_Diffuse.jpg");
+            mWalls[i].wall.specMapId = tm->LoadTexture("wallpaint/Wall_Paint_Specular.jpg");
+            mWalls[i].wall.bumpMapId = tm->LoadTexture("wallpaint/Wall_Paint_Bump.jpg");
+            mWalls[i].wall.normalMapId = tm->LoadTexture("wallpaint/Wall_Paint_Normal.jpg");
         }
     }
+
+    // paintings
+    Mesh meshPainting1 = MeshBuilder::CreatePlane(3, 5, 0.5f, false);
+    mLastSupperOld.meshBuffer.Initialize(meshPainting1);
+    mLastSupperOld.diffuseMapId = tm->LoadTexture("paintings/LastSupperOld.jpg");
+    mLastSupperOld.transform.position = { -6.9f, 2.0f, 3.0f };
+    mLastSupperOld.transform.rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, -90.0f * Math::Constants::DegToRad);
+
+    Mesh meshPainting2 = MeshBuilder::CreatePlane(3, 5, 0.5f, false);
+    mLastSupperNew.meshBuffer.Initialize(meshPainting2);
+    mLastSupperNew.diffuseMapId = tm->LoadTexture("paintings/LastSupperNew.jpg");
+    mLastSupperNew.transform.position = { -6.9f, 2.0f, -3.0f };
+    mLastSupperNew.transform.rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, -90.0f * Math::Constants::DegToRad);
 
     // standard effect
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
@@ -102,6 +145,8 @@ void GameState::Terminate()
         wall.wall.Terminate();
     }
     mWalls.clear();
+	mLastSupperNew.Terminate();
+    mLastSupperOld.Terminate();
     mGroundObject.Terminate();
 }
 void GameState::Update(float deltaTime)
@@ -119,6 +164,8 @@ void GameState::Render()
         {
             mStandardEffect.Render(wall.wall);
         }
+		mStandardEffect.Render(mLastSupperOld);
+		mStandardEffect.Render(mLastSupperNew);
     mStandardEffect.End();
 }
 
