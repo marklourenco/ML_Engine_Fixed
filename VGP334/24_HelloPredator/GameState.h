@@ -72,6 +72,11 @@ private:
 	ML_Engine::Graphics::Animation mMilitaryTruck3TransformAnimation;
 	ML_Engine::Graphics::Animator mAnimatorTruck3;
 
+	// bullet
+	ML_Engine::Graphics::RenderObject mBullet;
+	ML_Engine::Graphics::Animation mBulletTransformAnimation;
+	ML_Engine::Graphics::Animator mAnimatorBullet;
+
 
 	// camera anims
 	ML_Engine::Graphics::Animation mCameraTransformAnimation;
@@ -111,6 +116,7 @@ private:
 	ML_Engine::Audio::SoundId mSmallExplosionSoundId = 0;
 	ML_Engine::Audio::SoundId mThermalSoundId = 0;
 	ML_Engine::Audio::SoundId mTruckSoundId = 0;
+	ML_Engine::Audio::SoundId mTypingSoundId = 0;
 
 	// shadow effect
 	ML_Engine::Graphics::ShadowEffect mShadowEffect;

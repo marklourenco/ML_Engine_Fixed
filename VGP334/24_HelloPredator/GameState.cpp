@@ -149,6 +149,11 @@ void GameState::Initialize()
         mMilitaryTruck3.renderObjects[i].material.emissive = { 0.3f, 0.3f, 0.3f, 1.0f };
     }
 
+    // bullet
+    Mesh circle = MeshBuilder::CreateSphere(16, 16, 1.0f);
+    mBullet.meshBuffer.Initialize(circle);
+	mBullet.material.diffuse = Graphics::Colors::Red;
+
     // standard effect
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFile);
@@ -286,6 +291,24 @@ void GameState::Initialize()
         .AddPositionKey({ 119.0f, 1000.0f, 65.0f }, 43.0f)
         .Build();
 
+    mBulletTransformAnimation = AnimationBuilder()
+        .AddScaleKey({ 0.05f, 0.05f, 0.05f }, 0.0f)
+        .AddPositionKey({ 0.0f, 0.0f, 0.0f }, 0.0f)
+        .AddPositionKey({ 0.0f, 0.0f, 0.0f }, 29.19f)
+        .AddPositionKey({ 179.36f, 2.096f, 142.362f }, 29.2f)
+        .AddPositionKey({ 180.79f, 2.096f, 115.0f }, 30.0f)
+        .AddPositionKey({ 179.36f, 100.0f, 142.362f }, 30.01f)
+        .AddPositionKey({ 179.36f, 100.0f, 142.362f }, 37.49f)
+        .AddPositionKey({ 180.289f, 2.582f, 142.953f }, 37.5f)
+        .AddPositionKey({ 180.289f, 30.0f, 142.953f }, 38.0f)
+        .AddPositionKey({ 180.289f, 30.0f, 142.953f }, 42.0f)
+        .AddPositionKey({ 109.0f, 50.0f, 65.0f }, 42.01f)
+        .AddScaleKey({ 0.05f, 0.05f, 0.05f }, 42.01f)
+        .AddScaleKey({ 0.5f, 0.5f, 0.5f }, 42.02f)
+        .AddPositionKey({ 109.0f, 3.0f, 65.0f }, 43.0f)
+        .AddPositionKey({ 119.0f, 1000.0f, 65.0f }, 43.01f)
+        .Build();
+
     // events
     EventManager* em = EventManager::Get();
     mChangePredatorAnimListenerId = em->AddListener(
@@ -333,7 +356,6 @@ void GameState::Initialize()
     tem->ScheduleEvent(17.0f, new ChangeSoldierAnimEvent(2, 1, true));
     tem->ScheduleEvent(20.5f, new ChangeSoldierAnimEvent(0, 1, false));
 
-
     // soldier 2
     
     tem->ScheduleEvent(0.0f, new ChangeSoldierAnimEvent(2, 2, true));
@@ -369,6 +391,9 @@ void GameState::Initialize()
     tem->ScheduleEvent(30.0f, new PlaySoundEvent(9)); // small explosion
     tem->ScheduleEvent(30.0f, new PlaySoundEvent(3)); // death
     tem->ScheduleEvent(32.0f, new PlaySoundEvent(11)); // trucks
+    tem->ScheduleEvent(34.5f, new PlaySoundEvent(12)); // typing
+    tem->ScheduleEvent(37.5f, new PlaySoundEvent(7)); // missile at trucks
+    tem->ScheduleEvent(42.0f, new PlaySoundEvent(1)); // big explosion
 
     // audio
     SoundEffectManager* sm = SoundEffectManager::Get();
@@ -384,6 +409,7 @@ void GameState::Initialize()
     mSmallExplosionSoundId = sm->Load("SmallExplosion.wav");
     mThermalSoundId = sm->Load("Thermal.wav");
     mTruckSoundId = sm->Load("Trucks.wav");
+    mTypingSoundId = sm->Load("Typing.wav");
 
     // play initial sound
     sm->Play(mAmbienceSoundId);
@@ -480,6 +506,7 @@ void GameState::Terminate()
     mShadowEffect.Terminate();
     mGround.Terminate();
     mStandardEffect.Terminate();
+    mBullet.Terminate();
     mMilitaryTruck3.Terminate();
     mMilitaryTruck2.Terminate();
     mMilitaryTruck1.Terminate();
@@ -523,6 +550,7 @@ void GameState::Render()
        mMilitaryTruck1.transform = mMilitaryTruck1TransformAnimation.GetTransform(mTimer);
        mMilitaryTruck2.transform = mMilitaryTruck2TransformAnimation.GetTransform(mTimer);
        mMilitaryTruck3.transform = mMilitaryTruck3TransformAnimation.GetTransform(mTimer);
+       mBullet.transform = mBulletTransformAnimation.GetTransform(mTimer);
     }
     
     SimpleDraw::Render(mCamera);
@@ -556,6 +584,7 @@ void GameState::Render()
 	    	mStandardEffect.Render(mMilitaryTruck1);
 	    	mStandardEffect.Render(mMilitaryTruck2);
 	    	mStandardEffect.Render(mMilitaryTruck3);
+	    	mStandardEffect.Render(mBullet);
             mStandardEffect.Render(mSkySphere);
             mStandardEffect.Render(mMilitaryBase);
         mStandardEffect.End();
@@ -631,6 +660,9 @@ void GameState::DebugUI()
     ImGui::DragFloat3("Truck3Position", &mMilitaryTruck3.transform.position.x, 0.01f);
     ImGui::DragFloat3("Truck3Rotation", &mMilitaryTruck3.transform.rotation.x, 0.01f);
     ImGui::DragFloat3("Truck3Scale", &mMilitaryTruck3.transform.scale.x, 0.01f);
+    ImGui::Separator();
+    ImGui::DragFloat3("BulletPosition", &mBullet.transform.position.x, 0.01f);
+    ImGui::DragFloat3("BulletScale", &mBullet.transform.scale.x, 0.01f);
     ImGui::Separator();
 
     // PROPS
@@ -811,6 +843,10 @@ void GameState::OnPlaySoundEvent(const ML_Engine::Core::Event& e)
 	{
 		sm->Play(mTruckSoundId);
 	}
+    else if (soundEvent.index == 12)
+    {
+		sm->Play(mTypingSoundId);
+    }
 }
 
 void GameState::OnStopSoundEvent(const ML_Engine::Core::Event& e)
@@ -861,5 +897,13 @@ void GameState::OnStopSoundEvent(const ML_Engine::Core::Event& e)
 	else if (soundEvent.index == 10)
 	{
 		sm->Stop(mThermalSoundId);
+	}
+	else if (soundEvent.index == 11)
+	{
+		sm->Stop(mTruckSoundId);
+	}
+    else if (soundEvent.index == 12)
+	{
+		sm->Stop(mTypingSoundId);
 	}
 }
