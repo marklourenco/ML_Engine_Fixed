@@ -88,9 +88,29 @@ private:
 
 	void OnInfraredEvent(const ML_Engine::Core::Event& e);
 	ML_Engine::Core::EventListenerId mInfraredListenerId = 0;
+	
+	void OnSpawnParticleEvent(const ML_Engine::Core::Event& e);
+	ML_Engine::Core::EventListenerId mSpawnParticleListenerId = 0;
+
+	void OnPlaySoundEvent(const ML_Engine::Core::Event& e);
+	ML_Engine::Core::EventListenerId mPlaySoundListenerId = 0;
+
+	void OnStopSoundEvent(const ML_Engine::Core::Event& e);
+	ML_Engine::Core::EventListenerId mStopSoundListenerId = 0;
 
 	// audio
-	ML_Engine::Audio::SoundId mPaintingId = 0;
+	ML_Engine::Audio::SoundId mAmbienceSoundId = 0;
+	ML_Engine::Audio::SoundId mBigExplosionSoundId = 0;
+	ML_Engine::Audio::SoundId mBloodySlashSoundId = 0;
+	ML_Engine::Audio::SoundId mDeathSoundId = 0;
+	ML_Engine::Audio::SoundId mFallSoundId = 0;
+	ML_Engine::Audio::SoundId mFallDeathSoundId = 0;
+	ML_Engine::Audio::SoundId mMissileAtSoldierSoundId = 0;
+	ML_Engine::Audio::SoundId mMissileAtTrucksSoundId = 0;
+	ML_Engine::Audio::SoundId mMissileLockOnSoundId = 0;
+	ML_Engine::Audio::SoundId mSmallExplosionSoundId = 0;
+	ML_Engine::Audio::SoundId mThermalSoundId = 0;
+	ML_Engine::Audio::SoundId mTruckSoundId = 0;
 
 	// shadow effect
 	ML_Engine::Graphics::ShadowEffect mShadowEffect;
@@ -103,4 +123,9 @@ private:
 
 	// for debug
 	bool mCameraDebug = false;
+
+	// particles
+	ML_Engine::Graphics::ParticleSystemEffect mParticleSystemEffect;
+	ML_Engine::Physics::ParticleSystem mParticleSystem;
+	ML_Engine::Physics::ParticleSystem mExplosionSystem;
 };

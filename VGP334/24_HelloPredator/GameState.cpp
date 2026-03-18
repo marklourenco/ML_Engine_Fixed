@@ -262,6 +262,8 @@ void GameState::Initialize()
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 135 * Math::Constants::DegToRad), 0.0f)
 		.AddPositionKey({ 79.0f, 3.0f, 35.0f }, 32.0f)
 		.AddPositionKey({ 109.0f, 3.0f, 65.0f }, 40.0f)
+		.AddPositionKey({ 109.0f, 3.0f, 65.0f }, 42.99f)
+		.AddPositionKey({ 109.0f, 1000.0f, 65.0f }, 43.0f)
         .Build();
     
     mMilitaryTruck2TransformAnimation = AnimationBuilder()
@@ -270,6 +272,8 @@ void GameState::Initialize()
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 135 * Math::Constants::DegToRad), 0.0f)
         .AddPositionKey({ 79.0f, 3.0f, 45.0f }, 32.0f)
         .AddPositionKey({ 109.0f, 3.0f, 75.0f }, 40.0f)
+        .AddPositionKey({ 109.0f, 3.0f, 75.0f }, 42.99f)
+        .AddPositionKey({ 109.0f, 1000.0f, 75.0f }, 43.0f)
         .Build();
     
     mMilitaryTruck3TransformAnimation = AnimationBuilder()
@@ -278,6 +282,8 @@ void GameState::Initialize()
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 135 * Math::Constants::DegToRad), 0.0f)
         .AddPositionKey({ 89.0f, 3.0f, 35.0f }, 32.0f)
         .AddPositionKey({ 119.0f, 3.0f, 65.0f }, 40.0f)
+        .AddPositionKey({ 119.0f, 3.0f, 65.0f }, 42.99f)
+        .AddPositionKey({ 119.0f, 1000.0f, 65.0f }, 43.0f)
         .Build();
 
     // events
@@ -293,6 +299,18 @@ void GameState::Initialize()
     mInfraredListenerId = em->AddListener(
 		ChangeInfraredEvent::StaticGetTypeId(),
 		std::bind(&GameState::OnInfraredEvent, this, std::placeholders::_1)
+	);
+    mSpawnParticleListenerId = em->AddListener(
+        SpawnParticleEvent::StaticGetTypeId(),
+        std::bind(&GameState::OnSpawnParticleEvent, this, std::placeholders::_1)
+    );
+    mPlaySoundListenerId = em->AddListener(
+		PlaySoundEvent::StaticGetTypeId(),
+		std::bind(&GameState::OnPlaySoundEvent, this, std::placeholders::_1)
+	);
+	mStopSoundListenerId = em->AddListener(
+		StopSoundEvent::StaticGetTypeId(),
+		std::bind(&GameState::OnStopSoundEvent, this, std::placeholders::_1)
 	);
 
     // schedule events
@@ -331,11 +349,44 @@ void GameState::Initialize()
     tem->ScheduleEvent(12.01f, new ChangeInfraredEvent());
     tem->ScheduleEvent(15.0f, new ChangeInfraredEvent());
 
+    // particle schedule
+
+    tem->ScheduleEvent(20.5f, new SpawnParticleEvent(mSoldier1TransformAnimation.GetTransform(20.5f).position, 0));
+    tem->ScheduleEvent(24.2f, new SpawnParticleEvent(mSoldier2TransformAnimation.GetTransform(24.2f).position, 0));
+    tem->ScheduleEvent(30.0f, new SpawnParticleEvent(mSoldier3TransformAnimation.GetTransform(30.0f).position, 0));
+
+    tem->ScheduleEvent(43.0f, new SpawnParticleEvent({ 112.194f, 2.833f, 67.081f }, 1));
+
+    // audio schedule
+
+    tem->ScheduleEvent(12.0f, new PlaySoundEvent(10)); // thermal
+    tem->ScheduleEvent(18.0f, new PlaySoundEvent(4)); // fall
+    tem->ScheduleEvent(20.4f, new PlaySoundEvent(2)); // bloody slash
+    tem->ScheduleEvent(20.5f, new PlaySoundEvent(3)); // death
+    tem->ScheduleEvent(24.2f, new PlaySoundEvent(5)); // fall death
+    tem->ScheduleEvent(25.2f, new PlaySoundEvent(8)); // missile lock on
+    tem->ScheduleEvent(29.2f, new PlaySoundEvent(6)); // missile at soldier
+    tem->ScheduleEvent(30.0f, new PlaySoundEvent(9)); // small explosion
+    tem->ScheduleEvent(30.0f, new PlaySoundEvent(3)); // death
+    tem->ScheduleEvent(32.0f, new PlaySoundEvent(11)); // trucks
+
     // audio
     SoundEffectManager* sm = SoundEffectManager::Get();
+    mAmbienceSoundId = sm->Load("Ambience.wav");
+    mBigExplosionSoundId = sm->Load("BigExplosion.wav");
+    mBloodySlashSoundId = sm->Load("BloodySlash.wav");
+    mDeathSoundId = sm->Load("Death.wav");
+    mFallSoundId = sm->Load("Fall.wav");
+    mFallDeathSoundId = sm->Load("FallDeath.wav");
+    mMissileAtSoldierSoundId = sm->Load("MissileAtSoldier.wav");
+    mMissileAtTrucksSoundId = sm->Load("MissileAtTrucks.wav");
+    mMissileLockOnSoundId = sm->Load("MissileLockOn.wav");
+    mSmallExplosionSoundId = sm->Load("SmallExplosion.wav");
+    mThermalSoundId = sm->Load("Thermal.wav");
+    mTruckSoundId = sm->Load("Trucks.wav");
 
     // play initial sound
-    // sm->Play(mPaintingId);
+    sm->Play(mAmbienceSoundId);
 
     // infrared
     shaderFile = L"../../Assets/Shaders/Infrared.fx";
@@ -352,14 +403,66 @@ void GameState::Initialize()
 
     MeshPX screenQuad = MeshBuilder::CreateScreenQuadPX();
     mScreenQuad.meshBuffer.Initialize(screenQuad);
+
+    // particles
+
+    mParticleSystemEffect.Initialize();
+    mParticleSystemEffect.SetCamera(mCamera);
+
+    ParticleSystemInfo blood;
+    blood.textureId = TextureManager::Get()->LoadTexture("Images/explosion.png");
+    blood.maxParticles = 1000;
+    blood.particlesPerEmit = { 25, 35 };
+    blood.delay = 1.0f;
+    blood.lifeTime = 5.0f;
+    blood.timeBetweenEmit = { 999.0f, 999.0f };
+    blood.spawnAngle = { 0, 360.0f };
+    blood.spawnSpeed = { 1.0f, 3.0f };
+    blood.particleLifeTime = { 0.5f, 2.0f };
+    blood.spawnDirection = Math::Vector3::YAxis;
+    blood.spawnPosition = Math::Vector3::Zero;
+    blood.startScale = { { 0.25f, 0.25f, 0.25f }, { 0.5f, 0.5f, 0.5f }};
+    blood.endScale = { Math::Vector3::One, Math::Vector3::One };
+    blood.startColor = { Graphics::Colors::DarkRed, Graphics::Colors::DarkRed };
+    blood.endColor = { Graphics::Colors::DarkRed, Graphics::Colors::DarkRed };
+    mParticleSystem.Initialize(blood);
+
+    ParticleSystemInfo explosion;
+    explosion.textureId = TextureManager::Get()->LoadTexture("Images/explosion.png");
+    explosion.maxParticles = 2000;
+    explosion.particlesPerEmit = { 1, 2 };
+    explosion.delay = 0.0f;
+    explosion.lifeTime = 5.0f;
+    explosion.timeBetweenEmit = { 0.5f, 1.0f };
+    explosion.spawnAngle = { -180.0f, 0.0f };
+    explosion.spawnSpeed = { 0.0f, 0.0f };
+    explosion.particleLifeTime = { 2.0f, 4.0f };
+    explosion.spawnDirection = Math::Vector3::YAxis;
+    explosion.spawnPosition = Math::Vector3::Zero;
+    explosion.startScale = { { 10.0f, 10.0f, 10.0f }, { 20.0f, 20.0f, 20.0f } };
+    explosion.endScale = { { 100.0f, 100.0f, 100.0f }, { 200.0f, 200.0f, 200.0f } };
+    explosion.startColor = { { Graphics::Colors::Red }, { Graphics::Colors::OrangeRed } };
+    explosion.endColor = { { Graphics::Colors::Orange }, { Graphics::Colors::LightYellow } };
+	mExplosionSystem.Initialize(explosion); 
 }
 void GameState::Terminate()
 {
+	mExplosionSystem.Terminate();
+    mParticleSystem.Terminate();
+    mParticleSystemEffect.Terminate();
     mScreenQuad.meshBuffer.Terminate();
 	mCombineTexture.Terminate();
 	mRenderTarget.Terminate();
 	mInfrared.Terminate();
     EventManager* em = EventManager::Get();
+    em->RemoveListener(
+        PlaySoundEvent::StaticGetTypeId(),
+		mPlaySoundListenerId
+	);
+	em->RemoveListener(
+		StopSoundEvent::StaticGetTypeId(),
+		mStopSoundListenerId
+	);
 	em->RemoveListener(
 		ChangeInfraredEvent::StaticGetTypeId(),
 		mInfraredListenerId
@@ -402,6 +505,10 @@ void GameState::Update(float deltaTime)
 
     // input
     InputSystem* input = InputSystem::Get();
+
+    // particle system
+    mParticleSystem.Update(deltaTime);
+	mExplosionSystem.Update(deltaTime);
 }
 void GameState::Render()
 {
@@ -435,6 +542,11 @@ void GameState::Render()
         mTerrainEffect.Begin();
             mTerrainEffect.Render(mGround);
         mTerrainEffect.End();
+
+        mParticleSystemEffect.Begin();
+            mParticleSystem.Render(mParticleSystemEffect);
+			mExplosionSystem.Render(mParticleSystemEffect);
+        mParticleSystemEffect.End();
 
         mStandardEffect.Begin();
 	    	mStandardEffect.Render(mPredator);
@@ -620,5 +732,134 @@ void GameState::OnInfraredEvent(const ML_Engine::Core::Event& e)
             mSoldier2.renderObjects[i].material.emissive = { 1.0f, 1.0f, 1.0f, 255.0f };
             mSoldier3.renderObjects[i].material.emissive = { 1.0f, 1.0f, 1.0f, 255.0f };
         }
+	}
+}
+
+void GameState::OnSpawnParticleEvent(const ML_Engine::Core::Event& e)
+{
+    const SpawnParticleEvent& particleEvent = static_cast<const SpawnParticleEvent&>(e);
+
+    // blood
+    if (particleEvent.type == 0)
+    {
+        Math::Vector3 spawnPos = particleEvent.pos;
+        spawnPos.y += 2.5f; // move up to chest
+
+        mParticleSystem.SetPosition(spawnPos);
+        mParticleSystem.SpawnParticles();
+    }
+    else if (particleEvent.type == 1)
+    {
+        PhysicsWorld::Get()->SetGravity({ 0.0f, 0.0f, 0.0f });
+        Math::Vector3 spawnPos = particleEvent.pos;
+
+        mExplosionSystem.SetPosition(spawnPos);
+        mExplosionSystem.SpawnParticles();
+    }
+}
+
+void GameState::OnPlaySoundEvent(const ML_Engine::Core::Event& e)
+{
+    const PlaySoundEvent& soundEvent = static_cast<const PlaySoundEvent&>(e);
+    SoundEffectManager* sm = SoundEffectManager::Get();
+
+    if(soundEvent.index == 0)
+	{
+        sm->Play(mAmbienceSoundId);
+	}
+	else if (soundEvent.index == 1)
+	{
+		sm->Play(mBigExplosionSoundId);
+	}
+	else if (soundEvent.index == 2)
+	{
+		sm->Play(mBloodySlashSoundId);
+	}
+	else if (soundEvent.index == 3)
+	{
+		sm->Play(mDeathSoundId);
+	}
+	else if (soundEvent.index == 4)
+	{
+		sm->Play(mFallSoundId);
+	}
+	else if (soundEvent.index == 5)
+	{
+		sm->Play(mFallDeathSoundId);
+	}
+	else if (soundEvent.index == 6)
+	{
+		sm->Play(mMissileAtSoldierSoundId);
+	}
+	else if (soundEvent.index == 7)
+	{
+		sm->Play(mMissileAtTrucksSoundId);
+	}
+	else if (soundEvent.index == 8)
+	{
+		sm->Play(mMissileLockOnSoundId);
+	}
+	else if (soundEvent.index == 9)
+	{
+		sm->Play(mSmallExplosionSoundId);
+	}
+	else if (soundEvent.index == 10)
+	{
+		sm->Play(mThermalSoundId);
+	}
+    else if (soundEvent.index == 11)
+	{
+		sm->Play(mTruckSoundId);
+	}
+}
+
+void GameState::OnStopSoundEvent(const ML_Engine::Core::Event& e)
+{
+    const PlaySoundEvent& soundEvent = static_cast<const PlaySoundEvent&>(e);
+    SoundEffectManager* sm = SoundEffectManager::Get();
+
+	if (soundEvent.index == 0)
+	{
+		sm->Stop(mAmbienceSoundId);
+	}
+	else if (soundEvent.index == 1)
+	{
+		sm->Stop(mBigExplosionSoundId);
+	}
+	else if (soundEvent.index == 2)
+	{
+		sm->Stop(mBloodySlashSoundId);
+	}
+	else if (soundEvent.index == 3)
+	{
+		sm->Stop(mDeathSoundId);
+	}
+	else if (soundEvent.index == 4)
+	{
+		sm->Stop(mFallSoundId);
+	}
+	else if (soundEvent.index == 5)
+	{
+		sm->Stop(mFallDeathSoundId);
+	}
+	else if (soundEvent.index == 6)
+	{
+		sm->Stop(mMissileAtSoldierSoundId);
+	}
+	else if (soundEvent.index == 7)
+	{
+		sm->Stop(mMissileAtTrucksSoundId);
+	}
+	else if (soundEvent.index == 8)
+	{
+		sm->Stop(mMissileLockOnSoundId);
+	}
+	else if (soundEvent.index == 9)
+	{
+		sm->Stop(mSmallExplosionSoundId);
+	}
+	else if (soundEvent.index == 10)
+	{
+		sm->Stop(mThermalSoundId);
 	}
 }

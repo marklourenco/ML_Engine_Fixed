@@ -6,7 +6,10 @@ enum class GameEventType
 {
     ChangePredatorAnim,
     ChangeSoldierAnim,
-    ChangeInfrared
+    ChangeInfrared,
+    SpawnParticle,
+    PlaySound,
+    StopSound
 };
 
 class ChangePredatorAnimEvent : public ML_Engine::Core::Event
@@ -38,4 +41,35 @@ public:
     ChangeInfraredEvent() {}
 
     SET_EVENT_TYPE_ID(GameEventType::ChangeInfrared)
+};
+
+class SpawnParticleEvent : public ML_Engine::Core::Event
+{
+public:
+    SpawnParticleEvent(const Math::Vector3& p, int type) : pos(p), type(type) {}
+
+    Math::Vector3 pos;
+	int type;
+
+    SET_EVENT_TYPE_ID(GameEventType::SpawnParticle)
+};
+
+class PlaySoundEvent : public ML_Engine::Core::Event
+{
+public:
+    PlaySoundEvent(int index) : index(index) {}
+
+    int index = 0;
+
+    SET_EVENT_TYPE_ID(GameEventType::PlaySound)
+};
+
+class StopSoundEvent : public ML_Engine::Core::Event
+{
+public:
+    StopSoundEvent(int index) : index(index) {}
+
+    int index = 0;
+
+    SET_EVENT_TYPE_ID(GameEventType::StopSound)
 };
