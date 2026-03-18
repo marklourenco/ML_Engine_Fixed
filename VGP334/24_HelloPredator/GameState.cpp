@@ -113,10 +113,40 @@ void GameState::Initialize()
 	mSoldier3.transform.rotation = Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad);
     mAnimatorSoldier3.PlayAnimation(2, true);
 
+    // trucks
+
+    mMilitaryTruck1.Initialize("MilitaryTruck/MilitaryTruck.model");
+    mMilitaryTruck1.transform.scale = { 5.0f, 5.0f, 5.0f };
+
+    mMilitaryTruck2.Initialize("MilitaryTruck/MilitaryTruck.model");
+    mMilitaryTruck2.transform.scale = { 5.0f, 5.0f, 5.0f };
+
+    mMilitaryTruck3.Initialize("MilitaryTruck/MilitaryTruck.model");
+    mMilitaryTruck3.transform.scale = { 5.0f, 5.0f, 5.0f };
+
     // brightness
     for (uint32_t i = 0; i < mPredator.renderObjects.size(); ++i)
     {
         mPredator.renderObjects[i].material.emissive = { 0.4f, 0.4f, 0.4f, 255.0f };
+    }
+
+    // truck painting bc diffuse maps were not loading
+    for (uint32_t i = 0; i < mMilitaryTruck1.renderObjects.size(); ++i)
+    {
+        mMilitaryTruck1.renderObjects[i].material.ambient = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck1.renderObjects[i].material.diffuse = { 0.3f, 0.3f, 0.3f, 1.0f };
+		mMilitaryTruck1.renderObjects[i].material.specular = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck1.renderObjects[i].material.emissive = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+        mMilitaryTruck2.renderObjects[i].material.ambient = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck2.renderObjects[i].material.diffuse = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck2.renderObjects[i].material.specular = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck2.renderObjects[i].material.emissive = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+        mMilitaryTruck3.renderObjects[i].material.ambient = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck3.renderObjects[i].material.diffuse = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck3.renderObjects[i].material.specular = { 0.3f, 0.3f, 0.3f, 1.0f };
+        mMilitaryTruck3.renderObjects[i].material.emissive = { 0.3f, 0.3f, 0.3f, 1.0f };
     }
 
     // standard effect
@@ -152,6 +182,18 @@ void GameState::Initialize()
         .AddRotationKey({ 0.819f, -0.316f, 0.479f, 1.0f }, 24.99f)
 		.AddPositionKey({ 178.138f, 3.517f, 145.603 }, 25.0f)
         .AddRotationKey({ 0.157f, -0.281f, -0.947f, 1.0f }, 25.0f)
+        .AddPositionKey({ 178.138f, 3.517f, 145.603 }, 31.99f)
+        .AddRotationKey({ 0.157f, -0.281f, -0.947f, 1.0f }, 31.99f)
+        .AddPositionKey({ 77.943f, 8.039f, 34.062 }, 32.0f)
+        .AddRotationKey({ 0.701f, -0.224f, 0.678f, 1.0f }, 32.0f)
+        .AddPositionKey({ 90.482f, 7.934f, 46.568 }, 35.5f)
+        .AddRotationKey({ 0.701f, -0.224f, 0.678f, 1.0f }, 35.5f)
+        .AddPositionKey({ 177.105f, 3.656f, 140.975f }, 35.51f)
+        .AddRotationKey({ 0.767f, -0.348f, 0.54f, 1.0f }, 35.511f)
+        .AddPositionKey({ 177.105f, 3.656f, 140.975f }, 37.0f)
+        .AddRotationKey({ 0.767f, -0.348f, 0.54f, 1.0f }, 37.0f)
+        .AddPositionKey({ 180.47f, 3.196f, 145.175f }, 37.0f)
+        .AddRotationKey({ -0.610f, -0.140f, -0.780f, 1.0f }, 37.0f)
         .Build();
 
     mPredatorTransformAnimation = AnimationBuilder()
@@ -175,6 +217,8 @@ void GameState::Initialize()
         .AddPositionKey({ 179.67f, 0.03f, 143.21f }, 24.15f)
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, -90 * Math::Constants::DegToRad), 24.99f)
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 0 * Math::Constants::DegToRad), 25.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 0 * Math::Constants::DegToRad), 34.99f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 45 * Math::Constants::DegToRad), 35.0f)
         .Build();
     
     mSoldier1TransformAnimation = AnimationBuilder()
@@ -197,7 +241,9 @@ void GameState::Initialize()
     mSoldier2TransformAnimation = AnimationBuilder()
         .AddScaleKey({ 1.5f, 1.5f, 1.5f }, 0.0f)
         .AddPositionKey({ 180.79f, 0.1f, 143.12f }, 0.0f)
-        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad), 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad), 0.0f) // end of the line
+        .AddPositionKey({ 180.79f, 0.1f, 143.12f }, 35.0f)
+        .AddPositionKey({ 180.0f, 0.1f, 143.12f }, 35.1f)
         .Build();
 
     mSoldier3TransformAnimation = AnimationBuilder()
@@ -206,8 +252,32 @@ void GameState::Initialize()
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad), 0.0f)
         .AddPositionKey({ 180.79f, 0.3f, 127.04f }, 24.99f)
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad), 24.99f)
-        .AddPositionKey({ 180.79f, 0.3f, 127.04f }, 25.0f)
         .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 0 * Math::Constants::DegToRad), 25.0f)
+        .AddPositionKey({ 180.79f, 0.3f, 115.0f }, 30.0f) // end of the line
+        .Build();
+
+    mMilitaryTruck1TransformAnimation = AnimationBuilder()
+        .AddScaleKey({ 200.0f, 200.0f, 200.0f }, 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad), 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 135 * Math::Constants::DegToRad), 0.0f)
+		.AddPositionKey({ 79.0f, 3.0f, 35.0f }, 32.0f)
+		.AddPositionKey({ 109.0f, 3.0f, 65.0f }, 40.0f)
+        .Build();
+    
+    mMilitaryTruck2TransformAnimation = AnimationBuilder()
+        .AddScaleKey({ 200.0f, 200.0f, 200.0f }, 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad), 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 135 * Math::Constants::DegToRad), 0.0f)
+        .AddPositionKey({ 79.0f, 3.0f, 45.0f }, 32.0f)
+        .AddPositionKey({ 109.0f, 3.0f, 75.0f }, 40.0f)
+        .Build();
+    
+    mMilitaryTruck3TransformAnimation = AnimationBuilder()
+        .AddScaleKey({ 200.0f, 200.0f, 200.0f }, 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 90 * Math::Constants::DegToRad), 0.0f)
+        .AddRotationKey(Math::Quaternion::CreateFromAxisAngle(Math::Vector3::YAxis, 135 * Math::Constants::DegToRad), 0.0f)
+        .AddPositionKey({ 89.0f, 3.0f, 35.0f }, 32.0f)
+        .AddPositionKey({ 119.0f, 3.0f, 65.0f }, 40.0f)
         .Build();
 
     // events
@@ -235,6 +305,8 @@ void GameState::Initialize()
     tem->ScheduleEvent(18.16f, new ChangePredatorAnimEvent(5, true));
     tem->ScheduleEvent(19.5f, new ChangePredatorAnimEvent(0, false));
     tem->ScheduleEvent(22.5f, new ChangePredatorAnimEvent(3, false));
+    tem->ScheduleEvent(25.0f, new ChangePredatorAnimEvent(4, false));
+    tem->ScheduleEvent(35.5f, new ChangePredatorAnimEvent(2, false));
 
     // soldier 1 (clip index, soldier chosen)
     tem->ScheduleEvent(0.0f, new ChangeSoldierAnimEvent(4, 1, true));
@@ -252,6 +324,7 @@ void GameState::Initialize()
     // soldier 3
     
     tem->ScheduleEvent(25.0f, new ChangeSoldierAnimEvent(3, 3, true));
+    tem->ScheduleEvent(30.0f, new ChangeSoldierAnimEvent(0, 3, false));
     
     // infrared
     
@@ -260,7 +333,6 @@ void GameState::Initialize()
 
     // audio
     SoundEffectManager* sm = SoundEffectManager::Get();
-
 
     // play initial sound
     // sm->Play(mPaintingId);
@@ -305,6 +377,9 @@ void GameState::Terminate()
     mShadowEffect.Terminate();
     mGround.Terminate();
     mStandardEffect.Terminate();
+    mMilitaryTruck3.Terminate();
+    mMilitaryTruck2.Terminate();
+    mMilitaryTruck1.Terminate();
 	mSoldier3.Terminate();
 	mSoldier2.Terminate();
 	mSoldier1.Terminate();
@@ -338,6 +413,9 @@ void GameState::Render()
        mSoldier1.transform = mSoldier1TransformAnimation.GetTransform(mTimer);
        mSoldier2.transform = mSoldier2TransformAnimation.GetTransform(mTimer);
        mSoldier3.transform = mSoldier3TransformAnimation.GetTransform(mTimer);
+       mMilitaryTruck1.transform = mMilitaryTruck1TransformAnimation.GetTransform(mTimer);
+       mMilitaryTruck2.transform = mMilitaryTruck2TransformAnimation.GetTransform(mTimer);
+       mMilitaryTruck3.transform = mMilitaryTruck3TransformAnimation.GetTransform(mTimer);
     }
     
     SimpleDraw::Render(mCamera);
@@ -348,6 +426,9 @@ void GameState::Render()
             mShadowEffect.Render(mSoldier1);
             mShadowEffect.Render(mSoldier2);
             mShadowEffect.Render(mSoldier3);
+            mShadowEffect.Render(mMilitaryTruck1);
+            mShadowEffect.Render(mMilitaryTruck2);
+            mShadowEffect.Render(mMilitaryTruck3);
             mShadowEffect.Render(mMilitaryBase);
         mShadowEffect.End();
 
@@ -360,6 +441,9 @@ void GameState::Render()
 	    	mStandardEffect.Render(mSoldier1);
 	    	mStandardEffect.Render(mSoldier2);
 	    	mStandardEffect.Render(mSoldier3);
+	    	mStandardEffect.Render(mMilitaryTruck1);
+	    	mStandardEffect.Render(mMilitaryTruck2);
+	    	mStandardEffect.Render(mMilitaryTruck3);
             mStandardEffect.Render(mSkySphere);
             mStandardEffect.Render(mMilitaryBase);
         mStandardEffect.End();
@@ -389,6 +473,16 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Specular#Light", &mDirectionalLight.specular.r);
     }
 
+    if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        Material& material01 = mMilitaryTruck1.renderObjects[0].material;
+        ImGui::ColorEdit4("Emissive01#Material", &material01.emissive.r);
+        ImGui::ColorEdit4("Ambient01#Material", &material01.ambient.r);
+        ImGui::ColorEdit4("Diffuse01#Material", &material01.diffuse.r);
+        ImGui::ColorEdit4("Specular01#Material", &material01.specular.r);
+        ImGui::DragFloat("Shininess01#Material", &material01.shininess, 0.1f, 0.1f, 1000.f);
+    }
+
     // CAMERA POSITION & ROTATION
     Math::Vector3 cameraPosition = mCamera.GetPosition();
     Math::Vector3 cameraRotation = mCamera.GetDirection();
@@ -413,6 +507,18 @@ void GameState::DebugUI()
     ImGui::Separator();
 	ImGui::DragFloat3("Soldier3Position", &mSoldier3.transform.position.x, 0.01f);
 	ImGui::DragFloat3("Soldier3Rotation", &mSoldier3.transform.rotation.x, 0.01f);
+    ImGui::Separator();
+    ImGui::DragFloat3("Truck1Position", &mMilitaryTruck1.transform.position.x, 0.01f);
+    ImGui::DragFloat3("Truck1Rotation", &mMilitaryTruck1.transform.rotation.x, 0.01f);
+    ImGui::DragFloat3("Truck1Scale", &mMilitaryTruck1.transform.scale.x, 0.01f);
+    ImGui::Separator();
+    ImGui::DragFloat3("Truck2Position", &mMilitaryTruck2.transform.position.x, 0.01f);
+    ImGui::DragFloat3("Truck2Rotation", &mMilitaryTruck2.transform.rotation.x, 0.01f);
+    ImGui::DragFloat3("Truck2Scale", &mMilitaryTruck2.transform.scale.x, 0.01f);
+    ImGui::Separator();
+    ImGui::DragFloat3("Truck3Position", &mMilitaryTruck3.transform.position.x, 0.01f);
+    ImGui::DragFloat3("Truck3Rotation", &mMilitaryTruck3.transform.rotation.x, 0.01f);
+    ImGui::DragFloat3("Truck3Scale", &mMilitaryTruck3.transform.scale.x, 0.01f);
     ImGui::Separator();
 
     // PROPS

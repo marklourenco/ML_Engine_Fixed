@@ -26,6 +26,9 @@
 // military base
 -scale 0.01 ../../Assets/Models/MilitaryBase/MilitaryBase.fbx ../../Assets/Models/MilitaryBase/MilitaryBase.model
 
+// military truck
+-scale 0.01 ../../Assets/Models/MilitaryTruck/MilitaryTruck.fbx ../../Assets/Models/MilitaryTruck/MilitaryTruck.model
+
 // soldier
 -scale 0.01 ../../Assets/Models/Soldier/Soldier.fbx ../../Assets/Models/Soldier/Soldier.model
 // soldier anims

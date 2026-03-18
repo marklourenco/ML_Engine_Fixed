@@ -59,6 +59,19 @@ private:
 	int mClipIndexSoldier3 = -1;
 	float mAnimationSpeedSoldier3 = 1.0f;
 
+	// military trucks
+	ML_Engine::Graphics::RenderGroup mMilitaryTruck1;
+	ML_Engine::Graphics::Animation mMilitaryTruck1TransformAnimation;
+	ML_Engine::Graphics::Animator mAnimatorTruck1;
+
+	ML_Engine::Graphics::RenderGroup mMilitaryTruck2;
+	ML_Engine::Graphics::Animation mMilitaryTruck2TransformAnimation;
+	ML_Engine::Graphics::Animator mAnimatorTruck2;
+
+	ML_Engine::Graphics::RenderGroup mMilitaryTruck3;
+	ML_Engine::Graphics::Animation mMilitaryTruck3TransformAnimation;
+	ML_Engine::Graphics::Animator mAnimatorTruck3;
+
 
 	// camera anims
 	ML_Engine::Graphics::Animation mCameraTransformAnimation;
