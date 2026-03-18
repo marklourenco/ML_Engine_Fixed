@@ -12,3 +12,25 @@
 -scale 0.01 ../../Assets/Models/Philomena/Philomena.fbx ../../Assets/Models/Philomena/Philomena.model
 // philomena anims
 -animOnly 1 -scale 0.01 ../../Assets/Models/Philomena/Animations/PhilomenaTalking1.fbx ../../Assets/Models/Philomena/Animations/PhilomenaTalking1.model
+
+// predator model
+-scale 0.01 ../../Assets/Models/Predator/Predator.fbx ../../Assets/Models/Predator/Predator.model
+// predator anims
+-animOnly 1 -scale 0.01 ../../Assets/Models/Predator/Animations/PredatorAttackDoubleSlash.fbx ../../Assets/Models/Predator/Animations/PredatorAttackDoubleSlash.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Predator/Animations/PredatorIdle.fbx ../../Assets/Models/Predator/Animations/PredatorIdle.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Predator/Animations/PredatorInteract.fbx ../../Assets/Models/Predator/Animations/PredatorInteract.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Predator/Animations/PredatorJump.fbx ../../Assets/Models/Predator/Animations/PredatorJump.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Predator/Animations/PredatorPoint.fbx ../../Assets/Models/Predator/Animations/PredatorPoint.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Predator/Animations/PredatorRun.fbx ../../Assets/Models/Predator/Animations/PredatorRun.model
+
+// military base
+-scale 0.01 ../../Assets/Models/MilitaryBase/MilitaryBase.fbx ../../Assets/Models/MilitaryBase/MilitaryBase.model
+
+// soldier
+-scale 0.01 ../../Assets/Models/Soldier/Soldier.fbx ../../Assets/Models/Soldier/Soldier.model
+// soldier anims
+-animOnly 1 -scale 0.01 ../../Assets/Models/Soldier/Animations/SoldierDeath.fbx ../../Assets/Models/Soldier/Animations/SoldierDeath.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Soldier/Animations/SoldierFight.fbx ../../Assets/Models/Soldier/Animations/SoldierFight.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Soldier/Animations/SoldierIdle.fbx ../../Assets/Models/Soldier/Animations/SoldierIdle.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Soldier/Animations/SoldierRun.fbx ../../Assets/Models/Soldier/Animations/SoldierRun.model
+-animOnly 1 -scale 0.01 ../../Assets/Models/Soldier/Animations/SoldierWalk.fbx ../../Assets/Models/Soldier/Animations/SoldierWalk.model

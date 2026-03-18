@@ -31,6 +31,8 @@ namespace ML_Engine::Graphics
 		void SetMode(Mode mode);
 
 		void DebugUI();
+
+		Mode GetMode() const { return mMode; }
 	private:
 		struct InfraredData
 		{
