@@ -128,7 +128,7 @@ private:
 	ML_Engine::Graphics::Infrared mInfrared;
 
 	// for debug
-	bool mCameraDebug = false;
+	bool mCameraDebug = true;
 
 	// particles
 	ML_Engine::Graphics::ParticleSystemEffect mParticleSystemEffect;

@@ -153,6 +153,9 @@ void GameState::Initialize()
     Mesh circle = MeshBuilder::CreateSphere(16, 16, 1.0f);
     mBullet.meshBuffer.Initialize(circle);
 	mBullet.material.diffuse = Graphics::Colors::Red;
+	mBullet.material.specular = Graphics::Colors::Red;
+	mBullet.material.ambient = Graphics::Colors::Red;
+	mBullet.material.emissive = Graphics::Colors::Red;
 
     // standard effect
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
