@@ -5,7 +5,7 @@ using namespace ML_Engine;
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
 	AppConfig config;
-	config.appName = L"Hello Predator Final";
+	config.appName = L"Hello Animation Final";
 	
 	App& myApp = MainApp();
 	myApp.AddState<GameState>("GameState");

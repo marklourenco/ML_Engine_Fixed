@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d7a08be2-015b-432f-990e-1989c067fcaf}</ProjectGuid>
-    <RootNamespace>My24HelloPredator</RootNamespace>
+    <ProjectGuid>{8933eed0-a9d7-486e-a290-f3d8154ae88f}</ProjectGuid>
+    <RootNamespace>My24HelloAnimationFinal</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -97,6 +97,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -123,9 +125,16 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\ML_Engine.vcxproj">
+      <Project>{1dd11ec8-0e31-4a0d-885b-8f20f05aad75}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="TimeEventManager.cpp" />
@@ -135,11 +144,6 @@
     <ClInclude Include="GameEvents.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="TimeEventManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Engine\ML_Engine.vcxproj">
-      <Project>{1dd11ec8-0e31-4a0d-885b-8f20f05aad75}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
