@@ -13,8 +13,10 @@
 
 // components
 #include "TypeIds.h"
-#include "Component.h"
+#include "Component.h""
 #include "TransformComponent.h"
+#include "CameraComponent.h"
+#include "FPSCameraComponent.h"
 
 namespace ML_Engine
 {

@@ -7,6 +7,8 @@ namespace ML_Engine
 	{
 		Invalid,				// default value, not valid vid
 		Transform,              // transform component for location data
+		Camera,					// contains the camera for viewing
+		FPSCamera,				// move the Camera Component with FPS constrols
 		Count				    // last value, can be used to chain custom components
 	};
 }

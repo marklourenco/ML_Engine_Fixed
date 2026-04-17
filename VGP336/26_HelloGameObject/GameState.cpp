@@ -13,13 +13,15 @@ void GameState::Initialize()
    transformGO->AddComponent<TransformComponent>();
    transformGO->Initialize();
 
-   // GameObject* cameraGO = mGameWorld.CreateGameObject("Camera");
-   // cameraGO->AddComponent<CameraComponent>();
-   // cameraGO->Initialize();
+   GameObject* cameraGO = mGameWorld.CreateGameObject("Camera");
+   mCameraComponent = cameraGO->AddComponent<CameraComponent>();
+   cameraGO->AddComponent<FPSCameraComponent>();
+   cameraGO->Initialize();
 
-   // GameObject* meshGO = mGameWorld.CreateGameObject("Mesh");
-   // meshGO->AddComponent<MeshComponent>();
-   // meshGO->Initialize();
+   GameObject* playerGO = mGameWorld.CreateGameObject("Player");
+   TransformComponent* playerTransform = playerGO->AddComponent<TransformComponent>();
+   playerTransform->position.x = 2.0f;
+   playerGO->Initialize();
 }
 void GameState::Terminate()
 {
@@ -38,4 +40,6 @@ void GameState::DebugUI()
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	mGameWorld.DebugUI();
 	ImGui::End();
+
+	SimpleDraw::Render(mCameraComponent->GetCamera());
 }

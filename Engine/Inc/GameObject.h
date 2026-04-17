@@ -55,7 +55,7 @@ namespace ML_Engine
 				"GameObject: ComponentType must be of type Component");
 			for (auto& component : mComponents)
 			{
-				if (component->GetTypeId == ComponentType::StaticGetTypeId())
+				if (component->GetTypeId() == ComponentType::StaticGetTypeId())
 				{
 					return static_cast<ComponentType*>(component.get());
 				}
