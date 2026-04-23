@@ -11,6 +11,13 @@ namespace ML_Engine
 		FPSCamera,				// move the Camera Component with FPS constrols
 		Count				    // last value, can be used to chain custom components
 	};
+
+	enum class ServiceId
+	{
+		Invalid,                // default value, not valid vid
+		Camera,                 // manages the camera in the world
+		Count                    // last value, can be used to chain custom services
+	};
 }
 
 #define SET_TYPE_ID(id)\

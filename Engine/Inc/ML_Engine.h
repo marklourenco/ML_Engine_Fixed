@@ -18,6 +18,9 @@
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
 
+// services
+#include "Service.h"
+
 namespace ML_Engine
 {
 	App& MainApp();

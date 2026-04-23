@@ -18,10 +18,32 @@ void GameState::Initialize()
    cameraGO->AddComponent<FPSCameraComponent>();
    cameraGO->Initialize();
 
+   // Visual Game Objects
+
    GameObject* playerGO = mGameWorld.CreateGameObject("Player");
    TransformComponent* playerTransform = playerGO->AddComponent<TransformComponent>();
    playerTransform->position.x = 2.0f;
    playerGO->Initialize();
+
+   GameObject* bucketGO = mGameWorld.CreateGameObject("Bucket");
+   TransformComponent* bucketTransform = bucketGO->AddComponent<TransformComponent>();
+   bucketTransform->position.x = 4.0f;
+   bucketGO->Initialize();
+
+   GameObject* truckGO = mGameWorld.CreateGameObject("Truck");
+   TransformComponent* truckTransform = truckGO->AddComponent<TransformComponent>();
+   truckTransform->position.x = 6.0f;
+   truckGO->Initialize();
+
+   GameObject* guitarGO = mGameWorld.CreateGameObject("Guitar");
+   TransformComponent* guitarTransform = guitarGO->AddComponent<TransformComponent>();
+   guitarTransform->position.x = 8.0f;
+   guitarGO->Initialize();
+
+   GameObject* trainGO = mGameWorld.CreateGameObject("Train");
+   TransformComponent* trainTransform = trainGO->AddComponent<TransformComponent>();
+   trainTransform->position.x = 10.0f;
+   trainGO->Initialize();
 }
 void GameState::Terminate()
 {

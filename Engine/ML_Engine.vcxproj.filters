@@ -13,6 +13,12 @@
     <Filter Include="Src\Components">
       <UniqueIdentifier>{b4676a4f-b523-48b5-8611-d1a1d4616ff1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Services">
+      <UniqueIdentifier>{9fa56520-e5ed-4add-acfd-cb9fbba39e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Services">
+      <UniqueIdentifier>{6ff1dda8-780b-4d78-9eba-04e36110a815}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\Common.h">
@@ -53,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="Inc\FPSCameraComponent.h">
       <Filter>Inc\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Service.h">
+      <Filter>Inc\Services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

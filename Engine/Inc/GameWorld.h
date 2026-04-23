@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Service.h"
 
 namespace ML_Engine
 {
@@ -16,6 +17,36 @@ namespace ML_Engine
 		GameObject* CreateGameObject(std::string name);
 		void DestroyGameObject(const GameObjectHandle& handle);
 
+		template<class ServiceType>
+		ServiceType* AddService()
+		{
+			static_assert(std::is_base_of_v<Service, ServiceType>,
+				"GameWorld: service type must be of type Service");
+			ASSERT(!mInitialized, "GameWorld: can't add services after initialized");
+
+			auto& newService = mServices.emplace_back(std::make_unique<ServiceType>());
+			newService->mWorld = this;
+			return static_cast<ServiceType*>(newService.get());
+		}
+		template<class ServiceType>
+		const ServiceType* GetService() const
+		{
+			for (auto& service : mServices)
+			{
+				if (service->GetTypeId() == ServiceType::StaticGetTypeId())
+				{
+					return static_cast<ServiceType*>(service.get());
+				}
+			}
+			return nullptr;
+		}
+		template<class ServiceType>
+		ServiceType* GetService()
+		{
+			const GameWorld* thisConst = static_cast<const GameWorld*>(this);
+			return const_cast<ServiceType*>(thisConst->GetService<ServiceType>());
+		}
+
 	private:
 		bool IsValid(const GameObjectHandle& handle);
 		void ProcessDestroyList();
@@ -30,5 +61,8 @@ namespace ML_Engine
 		std::vector<uint32_t> mFreeSlots;
 		std::vector<uint32_t> mToBeDestroyed;
 		bool mInitialized = false;
+
+		using Services = std::vector<std::unique_ptr<Service>>;
+		Services mServices;
 	};
 }
