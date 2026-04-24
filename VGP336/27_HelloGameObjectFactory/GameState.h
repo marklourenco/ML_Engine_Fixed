@@ -13,5 +13,4 @@ public:
 
 private:
 	ML_Engine::GameWorld mGameWorld;
-	ML_Engine::CameraComponent* mCameraComponent = nullptr;
 };
