@@ -54,14 +54,20 @@
     <ClInclude Include="Inc\TransformComponent.h">
       <Filter>Inc\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\CameraComponent.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\FPSCameraComponent.h">
       <Filter>Inc\Components</Filter>
     </ClInclude>
     <ClInclude Include="Inc\Service.h">
       <Filter>Inc\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GameObjectFactory.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\SaveUtil.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\CameraComponent.h">
+      <Filter>Inc\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,8 +92,14 @@
     <ClCompile Include="Src\CameraComponent.cpp">
       <Filter>Src\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Src\FPSCameraComponent.cpp">
+    <ClCompile Include="Src\GameObjectFactory.cpp">
       <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SaveUtil.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FPSCameraComponent.cpp">
+      <Filter>Src\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

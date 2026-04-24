@@ -113,6 +113,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "25_HelloMemory", "VGP336\25
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "26_HelloGameObject", "VGP336\26_HelloGameObject\26_HelloGameObject.vcxproj", "{FCF58D2C-13DE-4A3C-B155-9B50ED314543}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{1B2BB375-567D-4F63-AC23-24B4225CD8FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Objects", "Objects", "{B5B6A3A2-7730-47D3-9990-2BE92FF766DA}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Objects\fps_camera.json = Assets\Templates\Objects\fps_camera.json
+		Assets\Templates\Objects\transform_obj.json = Assets\Templates\Objects\transform_obj.json
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "27_HelloGameObjectFactory", "VGP336\27_HelloGameObjectFactory\27_HelloGameObjectFactory.vcxproj", "{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -425,6 +435,14 @@ Global
 		{FCF58D2C-13DE-4A3C-B155-9B50ED314543}.Release|x64.Build.0 = Release|x64
 		{FCF58D2C-13DE-4A3C-B155-9B50ED314543}.Release|x86.ActiveCfg = Release|Win32
 		{FCF58D2C-13DE-4A3C-B155-9B50ED314543}.Release|x86.Build.0 = Release|Win32
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Debug|x64.ActiveCfg = Debug|x64
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Debug|x64.Build.0 = Debug|x64
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Debug|x86.ActiveCfg = Debug|Win32
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Debug|x86.Build.0 = Debug|Win32
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Release|x64.ActiveCfg = Release|x64
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Release|x64.Build.0 = Release|x64
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Release|x86.ActiveCfg = Release|Win32
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -469,6 +487,9 @@ Global
 		{8933EED0-A9D7-486E-A290-F3D8154AE88F} = {ECD90255-E44F-4186-B9DD-971A1C987299}
 		{1FA46347-9B20-4446-93EA-BD2E885D704D} = {E52312C4-86EB-4307-9409-3738168BBDA0}
 		{FCF58D2C-13DE-4A3C-B155-9B50ED314543} = {E52312C4-86EB-4307-9409-3738168BBDA0}
+		{1B2BB375-567D-4F63-AC23-24B4225CD8FF} = {5E3D8831-F99C-47DF-A8EC-A992A6B01741}
+		{B5B6A3A2-7730-47D3-9990-2BE92FF766DA} = {1B2BB375-567D-4F63-AC23-24B4225CD8FF}
+		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B} = {E52312C4-86EB-4307-9409-3738168BBDA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D97CCC11-9EBE-41ED-A727-A06D5C430B60}

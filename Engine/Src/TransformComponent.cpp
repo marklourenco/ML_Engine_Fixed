@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "TransformComponent.h"
+#include "SaveUtil.h"
 
 using namespace ML_Engine;
 using namespace ML_Engine::Graphics;
@@ -11,4 +12,11 @@ void TransformComponent::DebugUI()
 	ImGui::DragFloat3("Scale", &scale.x, 0.01f);
 
 	SimpleDraw::AddTransform(GetMatrix4());
+}
+
+void TransformComponent::Deserialize(const rapidjson::Value& value)
+{
+	SaveUtil::ReadVector3("Position", position, value);
+	SaveUtil::ReadQuaternion("Rotation", rotation, value);
+	SaveUtil::ReadVector3("Scale", scale, value);
 }

@@ -4,12 +4,13 @@
 
 #include "App.h"
 #include "AppState.h"
-
+#include "SaveUtil.h"
 
 // game object info
 #include "GameObject.h"
 #include "GameObjectHandle.h"
 #include "GameWorld.h"
+#include "GameObjectFactory.h"
 
 // components
 #include "TypeIds.h"
