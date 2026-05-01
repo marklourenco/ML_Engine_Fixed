@@ -12,6 +12,7 @@ namespace ML_Engine
 		Mesh,                   // add a mesh  shape on the game object to render
 		Model,                  // adds a model to the game object to render
 		Animator,               // adds an animator controller to the game object
+		RigidBody,              // adds a physics object to the game object
 		Count				    // last value, can be used to chain custom components
 	};
 
@@ -20,6 +21,7 @@ namespace ML_Engine
 		Invalid,                // default value, not valid vid
 		Camera,                 // manages the camera in the world
 		Render,                 // renders renderobjects in the world
+		Physics,                // registers and monitors physics objects
 		Count                    // last value, can be used to chain custom services
 	};
 }

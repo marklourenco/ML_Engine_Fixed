@@ -6,6 +6,10 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
+#include "MeshComponent.h"
+#include "ModelComponent.h"
+#include "AnimatorComponent.h"
+#include "RigidBodyComponent.h"
 
 using namespace ML_Engine;
 
@@ -25,6 +29,22 @@ namespace
 		else if (componentName == "FPSCameraComponent")
 		{
 			newComponent = gameObject.AddComponent<FPSCameraComponent>();
+		}
+		else if (componentName == "MeshComponent")
+		{
+			newComponent = gameObject.AddComponent<MeshComponent>();
+		}
+		else if (componentName == "ModelComponent")
+		{
+			newComponent = gameObject.AddComponent<ModelComponent>();
+		}
+		else if (componentName == "AnimatorComponent")
+		{
+			newComponent = gameObject.AddComponent<AnimatorComponent>();
+		}
+		else if (componentName == "RigidBodyComponent")
+		{
+			newComponent = gameObject.AddComponent<RigidBodyComponent>();
 		}
 
 		ASSERT(newComponent != nullptr, "GameObjectFactory: failed to create component %s", componentName.c_str());

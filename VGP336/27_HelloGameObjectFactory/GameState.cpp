@@ -9,20 +9,34 @@ void GameState::Initialize()
 {
    mGameWorld.AddService<CameraService>();
    mGameWorld.AddService<RenderService>();
+   mGameWorld.AddService<PhysicsService>();
    mGameWorld.Initialize();
 
-   GameObject* transformGO = mGameWorld.CreateGameObject("Transform", L"../../Assets/Templates/Objects/transform_obj.json");
-   transformGO->Initialize();
-
-   GameObject* cameraGO = mGameWorld.CreateGameObject("Camera", L"../../Assets/Templates/Objects/fps_camera.json");
-   cameraGO->Initialize();
+   std::vector<GameObject*> gameObjects;
+   gameObjects.push_back(mGameWorld.CreateGameObject("Transform", L"../../Assets/Templates/Objects/transform_obj.json"));
+   gameObjects.push_back(mGameWorld.CreateGameObject("Camera", L"../../Assets/Templates/Objects/fps_camera.json"));
 
    // Visual Game Objects
 
-   GameObject* playerGO = mGameWorld.CreateGameObject("Player", L"../../Assets/Templates/Objects/transform_obj.json");
-   TransformComponent* playerTransform = playerGO->GetComponent<TransformComponent>();
+   gameObjects.push_back(mGameWorld.CreateGameObject("Player", L"../../Assets/Templates/Objects/transform_obj.json"));
+   TransformComponent* playerTransform = gameObjects.back()->GetComponent<TransformComponent>();
    playerTransform->position.x = 2.0f;
-   playerGO->Initialize();
+
+   gameObjects.push_back(mGameWorld.CreateGameObject("SphereObj", L"../../Assets/Templates/Objects/mesh_obj.json"));
+   TransformComponent* meshTransform = gameObjects.back()->GetComponent<TransformComponent>();
+   meshTransform->position.x = -50.0f;
+   meshTransform->position.y = 10.0f;
+
+   gameObjects.push_back(mGameWorld.CreateGameObject("ModelObj", L"../../Assets/Templates/Objects/model_obj.json"));
+   TransformComponent* modelTransform = gameObjects.back()->GetComponent<TransformComponent>();
+   meshTransform->position.x = 2.0f;
+
+   gameObjects.push_back(mGameWorld.CreateGameObject("Ground", L"../../Assets/Templates/Objects/ground.json"));
+
+   for (GameObject* go : gameObjects)
+   {
+	   go->Initialize();
+   }
 }
 void GameState::Terminate()
 {
