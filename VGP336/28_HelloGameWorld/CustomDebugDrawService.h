@@ -1,0 +1,21 @@
+#pragma once
+
+#include "CustomTypeIds.h"
+#include <Inc/ML_Engine.h>
+
+class CustomDebugDrawComponent;
+
+class CustomDebugDrawService : public ML_Engine::Service
+{
+public:
+	SET_TYPE_ID(CustomServiceId::CustomDebugDrawDisplay);
+
+	void Render() override;
+
+	void Register(const CustomDebugDrawComponent* debugDrawComponent);
+	void Unregister(const CustomDebugDrawComponent* debugDrawComponent);
+
+private:
+	using CustomDebugDrawComponents = std::vector<const CustomDebugDrawComponent*>;
+	CustomDebugDrawComponents mCustomDebugDrawComponents;
+};

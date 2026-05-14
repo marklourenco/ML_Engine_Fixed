@@ -13,6 +13,7 @@ namespace ML_Engine
 
 		void Update(float deltaTime) override;
 		void DebugUI() override;
+		void Deserialize(const rapidjson::Value& value) override;
 
 		void Register(RigidBodyComponent* rigidBodyComponent);
 		void Unregister(RigidBodyComponent* rigidBodyComponent);

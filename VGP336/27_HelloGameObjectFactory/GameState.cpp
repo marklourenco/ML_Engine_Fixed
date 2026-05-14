@@ -24,7 +24,7 @@ void GameState::Initialize()
 
    gameObjects.push_back(mGameWorld.CreateGameObject("SphereObj", L"../../Assets/Templates/Objects/mesh_obj.json"));
    TransformComponent* meshTransform = gameObjects.back()->GetComponent<TransformComponent>();
-   meshTransform->position.x = -50.0f;
+   meshTransform->position.x = -2.0f;
    meshTransform->position.y = 10.0f;
 
    gameObjects.push_back(mGameWorld.CreateGameObject("ModelObj", L"../../Assets/Templates/Objects/model_obj.json"));
@@ -32,6 +32,8 @@ void GameState::Initialize()
    meshTransform->position.x = 2.0f;
 
    gameObjects.push_back(mGameWorld.CreateGameObject("Ground", L"../../Assets/Templates/Objects/ground.json"));
+   TransformComponent* groundTransform = gameObjects.back()->GetComponent<TransformComponent>();
+   meshTransform->position.y = 0.0f;
 
    for (GameObject* go : gameObjects)
    {

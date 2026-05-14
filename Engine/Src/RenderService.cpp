@@ -6,6 +6,7 @@
 #include "TransformComponent.h"
 #include "AnimatorComponent.h"
 #include "GameWorld.h"
+#include "SaveUtil.h"
 
 using namespace ML_Engine;
 
@@ -73,6 +74,19 @@ void RenderService::DebugUI()
 		}
 		mStandardEffect.DebugUI();
 		mShadowEffect.DebugUI();
+	}
+}
+void RenderService::Deserialize(const rapidjson::Value& value)
+{
+	SaveUtil::ReadVector3("Direction", mDirectionalLight.direction, value);
+	Math::Normalize(mDirectionalLight.direction);
+	SaveUtil::ReadColor("Ambient", mDirectionalLight.ambient, value);
+	SaveUtil::ReadColor("Diffuse", mDirectionalLight.diffuse, value);
+	SaveUtil::ReadColor("Specular", mDirectionalLight.specular, value);
+
+	if (value.HasMember("ShadowSize"))
+	{
+		mShadowEffect.SetSize(value["ShadowSize"].GetFloat());
 	}
 }
 void RenderService::Register(const RenderObjectComponent* renderObjectComponent)
