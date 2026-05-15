@@ -31,6 +31,7 @@ void App::Run(const AppConfig& config)
     EventManager::StaticInitialize();
     AudioSystem::StaticInitialize();
     SoundEffectManager::StaticInitialize(L"../../Assets/Audio");
+    UIFont::StaticInitialize(UIFont::FontType::Arial);
 
     PhysicsWorld::Settings settings;
 	PhysicsWorld::StaticInitialize(settings);
@@ -88,6 +89,7 @@ void App::Run(const AppConfig& config)
     LOG("App Quit");
 	mCurrentState->Terminate();
 
+    UIFont::StaticTerminate();
     SoundEffectManager::StaticTerminate();
     AudioSystem::StaticTerminate();
     EventManager::StaticTerminate();

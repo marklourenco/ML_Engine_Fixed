@@ -15,6 +15,9 @@ namespace ML_Engine
 		RigidBody,              // adds a physics object to the game object
 		SoundEffect,			// adds a sound effect to an object
 		SoundBank,				// adds a group of sounds to an object
+		UIText,                 // adds a UI text component
+		UISprite,               // adds a UI sprite component
+		UIButton,               // adds a UI button component
 		Count				    // last value, can be used to chain custom components
 	};
 
@@ -24,6 +27,7 @@ namespace ML_Engine
 		Camera,                 // manages the camera in the world
 		Render,                 // renders renderobjects in the world
 		Physics,                // registers and monitors physics objects
+		UIRender,               // renders UI components
 		Count                    // last value, can be used to chain custom services
 	};
 }

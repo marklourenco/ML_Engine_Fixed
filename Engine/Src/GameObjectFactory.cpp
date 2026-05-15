@@ -12,6 +12,7 @@
 #include "RigidBodyComponent.h"
 #include "SoundEventComponent.h"
 #include "SoundBankComponent.h"
+#include "UITextComponent.h"
 
 using namespace ML_Engine;
 
@@ -58,6 +59,10 @@ namespace
 		else if (componentName == "SoundBankComponent")
 		{
 			newComponent = gameObject.AddComponent<SoundBankComponent>();
+		}
+		else if (componentName == "UITextComponent")
+		{
+			newComponent = gameObject.AddComponent<UITextComponent>();
 		}
 		else
 		{
@@ -107,12 +112,16 @@ namespace
 		{
 			newComponent = gameObject.GetComponent<SoundBankComponent>();
 		}
+		else if (componentName == "UITextComponent")
+		{
+			newComponent = gameObject.GetComponent<UITextComponent>();
+		}
 		else
 		{
 			newComponent = TryGetComponent(componentName, gameObject);
 		}
 
-		ASSERT(newComponent != nullptr, "GameObjectFactory: component type [%s] not found", componentName.c_str()); // ISSUE
+		ASSERT(newComponent != nullptr, "GameObjectFactory: component type [%s] not found", componentName.c_str());
 		return newComponent;
 	}
 }

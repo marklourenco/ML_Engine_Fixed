@@ -134,6 +134,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{A501A2
 		Assets\Templates\Levels\level.json = Assets\Templates\Levels\level.json
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FW1FontWrapper", "External\FW1FontWrapper\FW1FontWrapper.vcxproj", "{0D034612-14E2-44E7-993A-72344A2CA7BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -462,6 +464,14 @@ Global
 		{5A9617E0-3435-41A5-8144-2150439D9FBF}.Release|x64.Build.0 = Release|x64
 		{5A9617E0-3435-41A5-8144-2150439D9FBF}.Release|x86.ActiveCfg = Release|Win32
 		{5A9617E0-3435-41A5-8144-2150439D9FBF}.Release|x86.Build.0 = Release|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x64.ActiveCfg = Debug|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x64.Build.0 = Debug|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x86.ActiveCfg = Debug|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x86.Build.0 = Debug|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x64.ActiveCfg = Release|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x64.Build.0 = Release|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.ActiveCfg = Release|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -511,6 +521,7 @@ Global
 		{DB1C4939-A6A0-48F9-BF88-3B095B71F47B} = {E52312C4-86EB-4307-9409-3738168BBDA0}
 		{5A9617E0-3435-41A5-8144-2150439D9FBF} = {E52312C4-86EB-4307-9409-3738168BBDA0}
 		{A501A278-0BCE-4039-8C86-E68FE347D267} = {1B2BB375-567D-4F63-AC23-24B4225CD8FF}
+		{0D034612-14E2-44E7-993A-72344A2CA7BD} = {63B8F4EA-3841-4628-A365-0ADA33FF7FEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D97CCC11-9EBE-41ED-A727-A06D5C430B60}
