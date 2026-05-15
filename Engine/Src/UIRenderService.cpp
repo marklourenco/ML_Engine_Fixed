@@ -3,6 +3,7 @@
 #include "UIComponent.h"
 
 using namespace ML_Engine;
+using namespace ML_Engine::Graphics;
 
 void UIRenderService::Terminate()
 {
@@ -10,10 +11,12 @@ void UIRenderService::Terminate()
 }
 void UIRenderService::Render()
 {
+	UISpriteRenderer::Get()->BeginRender();
 	for (UIComponent* uiComponent : mUIComponents)
 	{
 		uiComponent->Render();
 	}
+	UISpriteRenderer::Get()->EndRender();
 }
 void UIRenderService::Register(UIComponent* uiComponent)
 {

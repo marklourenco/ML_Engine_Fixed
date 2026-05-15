@@ -40,6 +40,8 @@
 #include "TextureManager.h"
 #include "Transform.h"
 #include "UIFont.h"
+#include "UISprite.h"
+#include "UISpriteRenderer.h"
 #include "ShadowEffect.h"
 #include "SimpleDraw.h"
 #include "VertexShader.h"
