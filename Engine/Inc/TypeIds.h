@@ -9,10 +9,12 @@ namespace ML_Engine
 		Transform,              // transform component for location data
 		Camera,					// contains the camera for viewing
 		FPSCamera,				// move the Camera Component with FPS constrols
+		TPCamera,               // adds a third person camera component over a component
 		Mesh,                   // add a mesh  shape on the game object to render
 		Model,                  // adds a model to the game object to render
 		Animator,               // adds an animator controller to the game object
 		RigidBody,              // adds a physics object to the game object
+		PlayerController,       // adds a player controller component for movement
 		SoundEffect,			// adds a sound effect to an object
 		SoundBank,				// adds a group of sounds to an object
 		UIText,                 // adds a UI text component

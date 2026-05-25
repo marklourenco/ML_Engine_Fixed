@@ -45,7 +45,7 @@ void MeshComponent::Deserialize(const rapidjson::Value& value)
 		}
 		else
 		{
-			ASSERT(false, "MeshComponent: must specifya shape type");
+			ASSERT(false, "MeshComponent: must specifict shape type");
 		}
 	}
 	if (value.HasMember("Material"))

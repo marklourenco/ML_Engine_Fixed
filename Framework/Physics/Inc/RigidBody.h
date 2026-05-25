@@ -23,6 +23,9 @@ namespace ML_Engine::Physics
 		void SetVelocity(const Math::Vector3& velocity);
 		const Math::Vector3 GetVelocity() const;
 
+		void SetAngularVelocity(const Math::Vector3& velocity);
+		const Math::Vector3 GetAngularVelocity() const;
+
 		bool IsDynamic() const;
 
 	private:
