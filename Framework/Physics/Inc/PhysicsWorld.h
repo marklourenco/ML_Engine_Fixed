@@ -34,6 +34,8 @@ namespace ML_Engine::Physics
 
 		void UpdateSettings(const Settings& settings);
 		void SetGravity(const Math::Vector3& gravity);
+		// get settings
+		const Settings& GetSettings() const;
 
 		void Register(PhysicsObject* physicsObject);
 		void Unregister(PhysicsObject* physicsObject);

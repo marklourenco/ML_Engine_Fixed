@@ -11,7 +11,7 @@
         "Type": "Sphere",
         "Slices": 60,
         "Rings": 60,
-        "Radius": 1.0
+        "Radius": 0.5
       },
       "Material": {
         "Emissive": [ 0.0, 0.0, 0.0, 1.0 ],
@@ -28,14 +28,31 @@
       "Mass": 2.0,
       "ColliderData": {
         "Shape": "Sphere",
-        "Radius": 1.0
+        "Radius": 0.5
       }
     },
     "PlayerControllerComponent": {
-      "mShiftSpeed": 10.0,
-      "mMoveSpeed": 1.0,
-      "mTurnSpeed": 0.1,
-      "mJumpSpeed": 10.0
+      "ShiftSpeed": 10.0,
+      "MoveSpeed": 1.0,
+      "TurnSpeed": 0.1,
+      "JumpSpeed": 2.5
+    },
+    "WallJumpComponent": {
+      "DetectionRadius": 0.95,
+      "GrabWindow": 0.8,
+      "WallSlideSpeed": -0.5,
+      "JumpHorizontal": 8.0,
+      "JumpVertical": 5.0,
+      "AirTimeMin": 0.15,
+      "GroundThreshold": 0.2,
+      "PostJumpHoldOff": 0.25
+    },
+    "TPSCameraComponent": {
+      "Offset": [ 1.0, 1.0, -2.3 ],
+      "Smoothing": 2.0
+    },
+    "CameraComponent": {
+
     }
   }
 }

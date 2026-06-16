@@ -17,6 +17,7 @@ namespace ML_Engine
 		void Update(float deltaTime) override;
 		void DebugUI() override;
 		void Deserialize(const rapidjson::Value& value) override;
+		void Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue) override;
 
 	private:
 		TransformComponent* mTransformComponent = nullptr;
@@ -26,5 +27,8 @@ namespace ML_Engine
 		float mMoveSpeed = 1.0f;
 		float mTurnSpeed = 0.1;
 		float mJumpSpeed = 10.0f;
+		float mGroundedVelocityThreshold = 0.2f;
+		float mGroundedTimeRequired = 0.1f;
+		float mGroundedTimer = 0.0f;
 	};
 }

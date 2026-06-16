@@ -21,6 +21,7 @@ namespace ML_Engine
 		void DestroyGameObject(const GameObjectHandle& handle);
 
 		void LoadLevel(const std::filesystem::path& levelFile);
+		void SaveLevel(const std::filesystem::path& levelFile);
 
 		template<class ServiceType>
 		ServiceType* AddService()
@@ -66,6 +67,7 @@ namespace ML_Engine
 		std::vector<uint32_t> mFreeSlots;
 		std::vector<uint32_t> mToBeDestroyed;
 		bool mInitialized = false;
+		std::filesystem::path mLevelFileName;
 
 		using Services = std::vector<std::unique_ptr<Service>>;
 		Services mServices;

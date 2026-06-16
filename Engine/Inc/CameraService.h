@@ -13,6 +13,8 @@ namespace ML_Engine
 
 		void DebugUI() override;
 
+		void Serialize(rapidjson::Document& doc, rapidjson::Value& value) override;
+
 		const Graphics::Camera& GetMain() const;
 		void SetMainCamera(uint32_t index);
 

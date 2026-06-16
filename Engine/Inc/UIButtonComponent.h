@@ -24,6 +24,7 @@ namespace ML_Engine
 		void Update(float deltaTime) override;
 		void Render() override;
 		void Deserialize(const rapidjson::Value& value) override;
+		void Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue) override;
 
 		Math::Vector2 GetPosition(bool includeOrigin = true);
 		void SetCallback(ButtonCallback cb);

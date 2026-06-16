@@ -42,6 +42,13 @@ void GameObject::Update(float deltaTime)
 		component->Update(deltaTime);
 	}
 }
+void GameObject::LateUpdate(float deltaTime)
+{
+	for (auto& component : mComponents)
+	{
+		component->LateUpdate(deltaTime);
+	}
+}
 void GameObject::DebugUI()
 {
 	ImGui::PushID(mId);

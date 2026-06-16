@@ -126,6 +126,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Objects", "Objects", "{B5B6
 		Assets\Templates\Objects\player_obj.json = Assets\Templates\Objects\player_obj.json
 		Assets\Templates\Objects\simple_mesh.json = Assets\Templates\Objects\simple_mesh.json
 		Assets\Templates\Objects\transform_obj.json = Assets\Templates\Objects\transform_obj.json
+		Assets\Templates\Objects\wall_obj.json = Assets\Templates\Objects\wall_obj.json
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "27_HelloGameObjectFactory", "VGP336\27_HelloGameObjectFactory\27_HelloGameObjectFactory.vcxproj", "{DB1C4939-A6A0-48F9-BF88-3B095B71F47B}"
@@ -134,7 +135,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "28_HelloGameWorld", "VGP336
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{A501A278-0BCE-4039-8C86-E68FE347D267}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Levels\candp_level.json = Assets\Templates\Levels\candp_level.json
 		Assets\Templates\Levels\level.json = Assets\Templates\Levels\level.json
+		Assets\Templates\Levels\walljump_level.json = Assets\Templates\Levels\walljump_level.json
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FW1FontWrapper", "External\FW1FontWrapper\FW1FontWrapper.vcxproj", "{0D034612-14E2-44E7-993A-72344A2CA7BD}"
@@ -145,6 +148,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{F602607B-49B3-
 		Assets\Templates\UI\ui_button.json = Assets\Templates\UI\ui_button.json
 		Assets\Templates\UI\ui_sprite.json = Assets\Templates\UI\ui_sprite.json
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VGP340", "VGP340", "{FD2AD795-E63F-4004-9413-CB7199833ED6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "30_HelloCandP", "VGP340\30_HelloCandP\30_HelloCandP.vcxproj", "{41D523F6-2680-4E90-BA03-BB4968A114A8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "29_HelloGameplayFinal", "VGP336\29_HelloGameplayFinal\29_HelloGameplayFinal.vcxproj", "{D32AA53F-CB9D-410B-9281-F049E81D0DB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -482,6 +491,22 @@ Global
 		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x64.Build.0 = Release|x64
 		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.ActiveCfg = Release|Win32
 		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.Build.0 = Release|Win32
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Debug|x64.ActiveCfg = Debug|x64
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Debug|x64.Build.0 = Debug|x64
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Debug|x86.ActiveCfg = Debug|Win32
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Debug|x86.Build.0 = Debug|Win32
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Release|x64.ActiveCfg = Release|x64
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Release|x64.Build.0 = Release|x64
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Release|x86.ActiveCfg = Release|Win32
+		{41D523F6-2680-4E90-BA03-BB4968A114A8}.Release|x86.Build.0 = Release|Win32
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Debug|x64.ActiveCfg = Debug|x64
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Debug|x64.Build.0 = Debug|x64
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Debug|x86.ActiveCfg = Debug|Win32
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Debug|x86.Build.0 = Debug|Win32
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Release|x64.ActiveCfg = Release|x64
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Release|x64.Build.0 = Release|x64
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Release|x86.ActiveCfg = Release|Win32
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -533,6 +558,8 @@ Global
 		{A501A278-0BCE-4039-8C86-E68FE347D267} = {1B2BB375-567D-4F63-AC23-24B4225CD8FF}
 		{0D034612-14E2-44E7-993A-72344A2CA7BD} = {63B8F4EA-3841-4628-A365-0ADA33FF7FEF}
 		{F602607B-49B3-41CA-8CBA-019C8A76F1E5} = {1B2BB375-567D-4F63-AC23-24B4225CD8FF}
+		{41D523F6-2680-4E90-BA03-BB4968A114A8} = {FD2AD795-E63F-4004-9413-CB7199833ED6}
+		{D32AA53F-CB9D-410B-9281-F049E81D0DB9} = {E52312C4-86EB-4307-9409-3738168BBDA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D97CCC11-9EBE-41ED-A727-A06D5C430B60}

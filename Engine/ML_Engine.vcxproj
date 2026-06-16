@@ -159,6 +159,7 @@
     <ClInclude Include="Inc\Service.h" />
     <ClInclude Include="Inc\SoundBankComponent.h" />
     <ClInclude Include="Inc\SoundEventComponent.h" />
+    <ClInclude Include="Inc\TPSCameraComponent.h" />
     <ClInclude Include="Inc\TransformComponent.h" />
     <ClInclude Include="Inc\TypeIds.h" />
     <ClInclude Include="Inc\UIButtonComponent.h" />
@@ -166,6 +167,9 @@
     <ClInclude Include="Inc\UIRenderService.h" />
     <ClInclude Include="Inc\UISpriteComponent.h" />
     <ClInclude Include="Inc\UITextComponent.h" />
+    <ClInclude Include="Inc\WallComponent.h" />
+    <ClInclude Include="Inc\WallJumpComponent.h" />
+    <ClInclude Include="Inc\WallService.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
@@ -191,11 +195,15 @@
     <ClCompile Include="Src\SaveUtil.cpp" />
     <ClCompile Include="Src\SoundBankComponent.cpp" />
     <ClCompile Include="Src\SoundEventComponent.cpp" />
+    <ClCompile Include="Src\TPSCameraComponent.cpp" />
     <ClCompile Include="Src\TransformComponent.cpp" />
     <ClCompile Include="Src\UIButtonComponent.cpp" />
     <ClCompile Include="Src\UIRenderService.cpp" />
     <ClCompile Include="Src\UISpriteComponent.cpp" />
     <ClCompile Include="Src\UITextComponent.cpp" />
+    <ClCompile Include="Src\WallComponent.cpp" />
+    <ClCompile Include="Src\WallJumpComponent.cpp" />
+    <ClCompile Include="Src\WallService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\Audio\Audio.vcxproj">

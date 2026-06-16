@@ -27,6 +27,16 @@ void RenderObjectComponent::Deserialize(const rapidjson::Value& value)
 {
 	SaveUtil::ReadBool("CastShadow", mCastShadow, value);
 }
+void RenderObjectComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue)
+{
+	rapidjson::Value componentValue(rapidjson::kObjectType);
+	// compare with original, if different, save current value
+	if (originalValue.HasMember("CastShadow") && mCastShadow != originalValue["CastShadow"].GetBool())
+	{
+		SaveUtil::WriteBool("CastShadow", mCastShadow, doc, componentValue);
+	}
+	value.AddMember("PlayerControllerComponent", componentValue, doc.GetAllocator());
+}
 bool RenderObjectComponent::CanCastShadow() const
 {
 	return mCastShadow;

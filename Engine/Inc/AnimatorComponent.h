@@ -13,6 +13,8 @@ namespace ML_Engine
 		void Update(float deltaTime) override;
 		void DebugUI() override;
 
+		void Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue) override;
+
 		bool Play(int index, bool looping = false);
 
 		Graphics::Animator& GetAnimator();

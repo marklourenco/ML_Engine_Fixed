@@ -13,6 +13,8 @@ void PlayerControllerComponent::Initialize()
 	mRigidBodyComponent = GetOwner().GetComponent<RigidBodyComponent>();
 	mTransformComponent = GetOwner().GetComponent<TransformComponent>();
 	ASSERT(mRigidBodyComponent != nullptr || mTransformComponent != nullptr, "PlayerControllerComponent: must have a component to move");
+
+	// InputSystem::Get()->ShowSystemCursor(false);
 }
 void PlayerControllerComponent::Terminate()
 {
@@ -21,6 +23,22 @@ void PlayerControllerComponent::Terminate()
 }
 void PlayerControllerComponent::Update(float deltaTime)
 {
+	// grounded check
+	if (mRigidBodyComponent != nullptr)
+	{
+		float velY = mRigidBodyComponent->GetVelocity().y;
+		if (std::abs(velY) < mGroundedVelocityThreshold)
+		{
+			mGroundedTimer += deltaTime;
+		}
+		else
+		{
+			mGroundedTimer = 0.0f;
+		}
+	}
+
+	bool isGrounded = mGroundedTimer > mGroundedTimeRequired;
+
 	Math::Vector2 moveInput = Math::Vector2::Zero;
 	auto input = InputSystem::Get();
 	const float moveSpeed = (input->IsKeyDown(KeyCode::LSHIFT) ? mShiftSpeed : mMoveSpeed);
@@ -35,13 +53,13 @@ void PlayerControllerComponent::Update(float deltaTime)
 	}
 	if (input->IsKeyDown(KeyCode::A))
 	{
-		moveInput.x = moveSpeed;
+		moveInput.x = -moveSpeed;
 	}
 	if (input->IsKeyDown(KeyCode::D))
 	{
-		moveInput.x = -moveSpeed;
+		moveInput.x = moveSpeed;
 	}
-	if (input->IsKeyDown(KeyCode::SPACE))
+	if (input->IsKeyDown(KeyCode::SPACE) && isGrounded)
 	{
 		// do a jump
 		if (mRigidBodyComponent != nullptr)
@@ -49,10 +67,15 @@ void PlayerControllerComponent::Update(float deltaTime)
 			Math::Vector3 vel = mRigidBodyComponent->GetVelocity();
 			vel.y = mJumpSpeed;
 			mRigidBodyComponent->SetVelocity(vel);
+			mGroundedTimer = 0.0f;
 		}
 	}
 	
-	float turnInput =input->GetMouseMoveX() * turnSpeed;
+	float turnInput = 0.0f;
+	if (input->IsMouseDown(MouseButton::RBUTTON))
+	{
+		turnInput = input->GetMouseMoveX() * turnSpeed;
+	}
 
 	Math::Matrix4 matrix = mTransformComponent->GetMatrix4();
 	Math::Vector3 forward = Math::GetLook(matrix);
@@ -91,4 +114,11 @@ void PlayerControllerComponent::Deserialize(const rapidjson::Value& value)
 	SaveUtil::ReadFloat("ShiftSpeed", mShiftSpeed, value);
 	SaveUtil::ReadFloat("TurnSpeed", mTurnSpeed, value);
 	SaveUtil::ReadFloat("JumpSpeed", mJumpSpeed, value);
+}
+
+void ML_Engine::PlayerControllerComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue)
+{
+	rapidjson::Value componentValue(rapidjson::kObjectType);
+	// compare with original, if different, save current value
+	value.AddMember("PlayerControllerComponent", componentValue, doc.GetAllocator());
 }

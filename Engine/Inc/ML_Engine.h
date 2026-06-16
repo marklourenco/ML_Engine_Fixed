@@ -30,6 +30,9 @@
 #include "UISpriteComponent.h"
 #include "UIButtonComponent.h"
 #include "PlayerControllerComponent.h"
+#include "TPSCameraComponent.h"
+#include "WallComponent.h"
+#include "WallJumpComponent.h"
 
 // services
 #include "Service.h"
@@ -37,6 +40,7 @@
 #include "RenderService.h"
 #include "PhysicsService.h"
 #include "UIRenderService.h"
+#include "WallService.h"
 
 namespace ML_Engine
 {

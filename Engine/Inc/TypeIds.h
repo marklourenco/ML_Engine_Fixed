@@ -9,7 +9,7 @@ namespace ML_Engine
 		Transform,              // transform component for location data
 		Camera,					// contains the camera for viewing
 		FPSCamera,				// move the Camera Component with FPS constrols
-		TPCamera,               // adds a third person camera component over a component
+		TPSCamera,               // adds a third person camera component over a component
 		Mesh,                   // add a mesh  shape on the game object to render
 		Model,                  // adds a model to the game object to render
 		Animator,               // adds an animator controller to the game object
@@ -20,6 +20,8 @@ namespace ML_Engine
 		UIText,                 // adds a UI text component
 		UISprite,               // adds a UI sprite component
 		UIButton,               // adds a UI button component
+		Wall,                   // adds a wall component
+		WallJump,               // adds a wall jump component
 		Count				    // last value, can be used to chain custom components
 	};
 
@@ -30,6 +32,7 @@ namespace ML_Engine
 		Render,                 // renders renderobjects in the world
 		Physics,                // registers and monitors physics objects
 		UIRender,               // renders UI components
+		Wall,				   // manages wall components in the world
 		Count                    // last value, can be used to chain custom services
 	};
 }

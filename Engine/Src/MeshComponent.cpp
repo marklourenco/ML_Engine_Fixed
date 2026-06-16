@@ -66,6 +66,12 @@ void MeshComponent::Deserialize(const rapidjson::Value& value)
 		SaveUtil::ReadString("BumpMap", matData.bumpMapName, textureData);
 	}
 }
+void MeshComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue)
+{
+	rapidjson::Value componentValue(rapidjson::kObjectType);
+	// compare with original, if different, save current value
+	value.AddMember("MeshComponent", componentValue, doc.GetAllocator());
+}
 const Graphics::Model& MeshComponent::GetModel() const
 {
 	return mMeshModel;

@@ -1,0 +1,33 @@
+{
+  "Components": {
+    "TransformComponent": {
+      "Position": [ 0, 1.5, 0 ],
+      "Rotation": [ 0, 0, 0, 1 ],
+      "Scale": [ 0.3, 3, 3 ]
+    },
+    "MeshComponent": {
+      "CastShadow": false,
+      "Shape": {
+        "Type": "Cube",
+        "Size": 1.0
+      },
+      "Material": {
+        "Emissive": [ 0.0, 0.0, 0.0, 1.0 ],
+        "Ambient": [ 0.3, 0.3, 0.3, 1.0 ],
+        "Diffuse": [ 0.8, 0.8, 0.8, 1.0 ],
+        "Specular": [ 1.0, 1.0, 1.0, 1.0 ],
+        "Shininess": 10.0
+      }
+    },
+    "RigidBodyComponent": {
+      "Mass": 0,
+      "ColliderData": {
+        "Shape": "Box",
+        "HalfExtents": [ 0.15, 1.5, 1.5 ]
+      }
+    },
+    "WallComponent": {
+
+    }
+  }
+}

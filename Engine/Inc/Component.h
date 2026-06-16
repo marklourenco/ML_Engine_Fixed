@@ -20,6 +20,7 @@ namespace ML_Engine
 		virtual void Initialize() {}
 		virtual void Terminate() {}
 		virtual void Update(float deltaTime) {}
+		virtual void LateUpdate(float deltaTime) {}
 		virtual void DebugUI() {}
 
 		// will read in data, apply to the object
