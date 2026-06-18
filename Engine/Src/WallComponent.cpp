@@ -26,7 +26,7 @@ void WallComponent::Terminate()
 
 void WallComponent::Deserialize(const rapidjson::Value& value)
 {
-	// no data, this component is just a tag
+	// no data, component is just a tag
 }
 
 void WallComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& originalValue)

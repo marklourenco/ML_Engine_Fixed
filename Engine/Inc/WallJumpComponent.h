@@ -28,7 +28,6 @@ namespace ML_Engine
 		TransformComponent* mTransformComponent = nullptr;
 		RigidBodyComponent* mRigidBodyComponent = nullptr;
 
-		// runtime states
 		bool mIsGrabbing = false;
 		bool mCanGrab = true;
 		float mGrabTimer = 0.0f;
@@ -38,7 +37,6 @@ namespace ML_Engine
 		Math::Vector3 mLaunchVelocity = Math::Vector3::Zero;
 		float mLaunchTimer = 0.0f;
 
-		// set parameters
 		float mDetectionRadius = 0.5f;
 		float mGrabWindow = 0.8f;
 		float mWallSlideSpeed = -0.5f;

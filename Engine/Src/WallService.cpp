@@ -42,39 +42,36 @@ void WallService::Unregister(WallComponent* wall)
 
 WallHitResult WallService::FindNearestWall(const Math::Vector3& position, float radius) const
 {
-	WallHitResult result;
-	float nearest = radius;
+    WallHitResult result;
+    float nearest = radius;
 
-	for (WallComponent* wall : mWalls)
-	{
-		TransformComponent* tc = wall->GetOwner().GetComponent<TransformComponent>();
-		if (tc == nullptr)
-		{
-			continue;
-		}
+    for (WallComponent* wall : mWalls)
+    {
+        TransformComponent* tc = wall->GetOwner().GetComponent<TransformComponent>();
+        if (tc == nullptr)
+            continue;
 
-		Math::Vector3 diff = position - tc->position;
-		Math::Vector3 horizontal = { diff.x, 0.0f, diff.z };
-		float dist = Math::Magnitude(horizontal);
+        Math::Vector3 diff = position - tc->position;
+        Math::Vector3 horizontal = { diff.x, 0.0f, diff.z };
+        float dist = Math::Magnitude(horizontal);
 
-		if (dist < nearest && dist > 0.001f)
-		{
-			nearest = dist;
-			result.hit = true;
-			result.distance = dist;
-			result.wallPosition = tc->position;
+        if (dist < nearest && dist > 0.001f)
+        {
+            nearest = dist;
+            result.hit = true;
+            result.distance = dist;
+            result.wallPosition = tc->position;
 
-			Math::Vector3 n = Math::Normalize(horizontal);
-			if (std::abs(n.x >= std::abs(n.z)))
-			{
-				result.wallNormal = { (n.x >= 0.0f ? 1.0f : -1.0f), 0.0f, 0.0f };
-			}
-			else
-			{
-				result.wallNormal = { 0.0f, 0.0f, (n.z >= 0.0f ? 1.0f : -1.0f) };
-			}
-		}
-	}
+            Math::Matrix4 wallMatrix = tc->GetMatrix4();
+            Math::Vector3 localRight = Math::GetRight(wallMatrix);
 
-	return result;
+            localRight = Math::Normalize({ localRight.x, 0.0f, localRight.z });
+
+            float side = Math::Dot(horizontal, localRight);
+            float sign = (side >= 0.0f ? 1.0f : -1.0f);
+            result.wallNormal = localRight * sign;
+        }
+    }
+
+    return result;
 }
