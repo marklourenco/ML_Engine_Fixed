@@ -14,4 +14,7 @@ public:
 private:
 	std::filesystem::path mLevelFile;
 	ML_Engine::GameWorld mGameWorld;
+
+	ML_Engine::Graphics::SimpleTextureEffect mSimpleTextureEffect;
+	ML_Engine::Graphics::SimpleTextureEffect::RenderData mSkySphere;
 };

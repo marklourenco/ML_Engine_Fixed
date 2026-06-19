@@ -64,16 +64,48 @@
       "Components": {
         "MeshComponent": {
           "Textures": {
-            "DiffuseMap": "../../Assets/Textures/misc/basketball.jpg"
+            "DiffuseMap": "../../Assets/Textures/misc/concrete.jpg"
           }
         }
       }
     },
-    "HUD": {
-      "Template": "../../Assets/Templates/UI/hud_screen.json"
+    "Ground2": {
+      "Template": "../../Assets/Templates/Objects/ground.json",
+      "Components": {
+        "MeshComponent": {
+          "Textures": {
+            "DiffuseMap": "../../Assets/Textures/misc/concrete.jpg"
+          },
+          "TransformComponent": {
+            "Position": [ 0.0, 5.0, 0.0 ],
+            "Rotation": [ 0.0, 1.0, 0.0, 1.0 ],
+            "Scale": [ 1.0, 1.0, 1.0 ]
+          }
+        }
+      }
     },
-    "Player": {
-      "Template": "../../Assets/Templates/Objects/player_obj.json"
+    "Floor1": {
+      "Template": "../../Assets/Templates/Objects/mesh_obj.json",
+      "Components": {
+        "TransformComponent": {
+          "Position": [ -10.0, 3.0, 0.0 ],
+          "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
+          "Scale": [ 8.0, 1.0, 6.0 ]
+        },
+        "MeshComponent": {
+          "Textures": { "DiffuseMap": "../../Assets/Textures/misc/concrete.jpg" }
+        },
+          "RigidBodyComponent": {
+            "Mass": 0.0,
+            "ColliderData": {
+              "Shape": "Box",
+              "HalfExtents": [ 5.0, 0.5, 5.0 ]
+            }
+          }
+        }
+      },
+        "Player": {
+          "Template": "../../Assets/Templates/Objects/player_obj.json"
+        }
+      }
     }
-  }
-}
