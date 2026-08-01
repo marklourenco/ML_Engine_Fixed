@@ -39,18 +39,28 @@ Each subproject below is a standalone `GameState` built on top of ML_Engine, use
 
 A textured 3D solar system: the solar system and all its planets each rotating on its own axis while orbiting the sun at an individual speed. Includes a secondary render-target camera that can focus on any body in the system (selectable through the debug UI) to render a picture-in-picture close-up view, alongside a free-flying main camera for exploring the scene.
 
+<img width="800" height="407" alt="SolarSystemGIF" src="https://github.com/user-attachments/assets/f098f8b8-9ab6-4d73-8372-245fa12aad16" />
+
 ### Infrared
 
 A terrain and lighting demo built around a custom thermal-vision post-processing effect. Characters are lit with shadow-mapped directional lighting over a heightmap terrain, then the whole scene is rendered to a texture and run through a hand-written HLSL shader that applies UV distortion, a box blur, luminance-based heat-color grading (cold blue → hot yellow-white), bloom-style glow on bright areas, and Sobel edge detection, composited with a HUD overlay texture.
+
+<img width="800" height="408" alt="InfraredGIF" src="https://github.com/user-attachments/assets/8ddd40f7-c5e0-44c9-aa20-ea1c9eedf0dc" />
 
 ### Invasion Animation
 
 The engine's most ambitious showcase: a fully scripted ~40-second cinematic combining skeletal character animation, keyframed camera and prop animation (via `AnimationBuilder`), a custom `TimeEventManager` that fires timestamped events to drive the scene, particle effects (blood and explosions), synchronized sound cues, and a toggleable infrared view, all coordinated through the engine's event system rather than hardcoded per-frame logic.
 
+<img width="800" height="407" alt="AnimationGIF" src="https://github.com/user-attachments/assets/450c1de4-ee2b-4b05-902d-d9f04d242574" />
+
 ### Wall Jump
 
 A gameplay prototype demonstrating the engine's data-driven side: the entire level (geometry, entities, wall-jump mechanics) is defined in a JSON level template and loaded through the engine's `GameWorld`/component/service architecture, with the ability to hot-reload the level from the debug UI.
 
+<img width="800" height="410" alt="WallJumpGIF" src="https://github.com/user-attachments/assets/031c86b4-3504-473e-800c-fa8d55dd2f30" />
+
 ### Ball Physics Multithreading
 
 A standalone physics stress-test: dozens of balls simulate gravity, floor bouncing, and ball-to-ball collision with restitution and friction. Per-ball integration runs in parallel via `std::execution::par_unseq`, while collision *detection* runs on its own dedicated background thread, synchronized with the main thread each frame through a mutex/condition-variable handshake so detection and gameplay update never block each other for longer than necessary.
+
+<img width="800" height="410" alt="CandPGIF" src="https://github.com/user-attachments/assets/87920da9-a1da-4bfb-92a9-4f57a3d77c35" />
