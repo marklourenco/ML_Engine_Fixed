@@ -6,15 +6,15 @@ Rather than being built for a single game, ML_Engine was developed iteratively t
 
 ## Engine Features
 
-- **Rendering** — DirectX 11 pipeline with custom HLSL effects: `StandardEffect` (lit/textured geometry), `ShadowEffect` (shadow mapping), `TerrainEffect` (heightmap terrain), `SimpleTextureEffect` (lightweight unlit rendering), and a post-processing `Infrared` effect (thermal-vision shader with distortion, blur, luminance-based heat gradient, and edge detection).
-- **Animation** — Skeletal `Animator`/`Animation` playback for imported character rigs, plus a code-driven `AnimationBuilder` for authoring keyframed position/rotation/scale animations directly in C++ (used for cinematic camera and object paths).
-- **Terrain** — Heightmap-based terrain generation and sampling (including height queries for camera/character grounding).
-- **Particles** — A configurable `ParticleSystem` (spawn rate, lifetime, color/scale over lifetime, spawn angle/speed) driven by a dedicated particle render effect.
-- **Physics** — A `PhysicsWorld` service integrated into the engine's game-object system, plus a standalone multithreaded ball-physics system (see *Ball Physics Multithreading* below) used to prototype parallelized simulation before integrating similar ideas into the engine.
-- **Audio** — `SoundEffectManager` for loading and triggering sound effects, plus an `AudioSystem` service.
-- **Events** — An engine-wide `EventManager` with custom event types and listeners, paired with a `TimeEventManager` for scheduling events to fire at specific timestamps (used to choreograph cutscenes).
-- **GameWorld / ECS** — A `GameWorld` containing `GameObject`s built from composable `Component`s and `Service`s (e.g. `CameraComponent`, `FPSCameraComponent`, `CameraService`), with support for loading full levels from JSON templates.
-- **Debug Tooling** — ImGui-based debug UI wired into nearly every system, letting values (lighting, materials, transforms, physics settings) be tuned live at runtime.
+- **Rendering** - DirectX 11 pipeline with custom HLSL effects: `StandardEffect` (lit/textured geometry), `ShadowEffect` (shadow mapping), `TerrainEffect` (heightmap terrain), `SimpleTextureEffect` (lightweight unlit rendering), and a post-processing `Infrared` effect (thermal-vision shader with distortion, blur, luminance-based heat gradient, and edge detection).
+- **Animation** - Skeletal `Animator`/`Animation` playback for imported character rigs, plus a code-driven `AnimationBuilder` for authoring keyframed position/rotation/scale animations directly in C++ (used for cinematic camera and object paths).
+- **Terrain** - Heightmap-based terrain generation and sampling (including height queries for camera/character grounding).
+- **Particles** - A configurable `ParticleSystem` (spawn rate, lifetime, color/scale over lifetime, spawn angle/speed) driven by a dedicated particle render effect.
+- **Physics** - A `PhysicsWorld` service integrated into the engine's game-object system, plus a standalone multithreaded ball-physics system (see *Ball Physics Multithreading* below) used to prototype parallelized simulation before integrating similar ideas into the engine.
+- **Audio** - `SoundEffectManager` for loading and triggering sound effects, plus an `AudioSystem` service.
+- **Events** - An engine-wide `EventManager` with custom event types and listeners, paired with a `TimeEventManager` for scheduling events to fire at specific timestamps (used to choreograph cutscenes).
+- **GameWorld / ECS** - A `GameWorld` containing `GameObject`s built from composable `Component`s and `Service`s (e.g. `CameraComponent`, `FPSCameraComponent`, `CameraService`), with support for loading full levels from JSON templates.
+- **Debug Tooling** - ImGui-based debug UI wired into nearly every system, letting values (lighting, materials, transforms, physics settings) be tuned live at runtime.
 
 ## Tech Stack
 
