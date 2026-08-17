@@ -137,6 +137,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{A501A2
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\Levels\candp_level.json = Assets\Templates\Levels\candp_level.json
 		Assets\Templates\Levels\level.json = Assets\Templates\Levels\level.json
+		Assets\Templates\Levels\level_mp.json = Assets\Templates\Levels\level_mp.json
 		Assets\Templates\Levels\walljump_level.json = Assets\Templates\Levels\walljump_level.json
 	EndProjectSection
 EndProject
@@ -154,6 +155,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "30_HelloCandP", "VGP340\30_HelloCandP\30_HelloCandP.vcxproj", "{41D523F6-2680-4E90-BA03-BB4968A114A8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "29_HelloGameplayFinal", "VGP336\29_HelloGameplayFinal\29_HelloGameplayFinal.vcxproj", "{D32AA53F-CB9D-410B-9281-F049E81D0DB9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Network", "Framework\Network\Network.vcxproj", "{467CA13C-4672-4F37-9347-2E042DEEE872}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VGP331", "VGP331", "{550F3F00-89AB-4963-B013-EFB0BAF966E6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "31_HelloNetwork", "VGP331\31_HelloNetwork\31_HelloNetwork.vcxproj", "{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -507,6 +514,22 @@ Global
 		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Release|x64.Build.0 = Release|x64
 		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Release|x86.ActiveCfg = Release|Win32
 		{D32AA53F-CB9D-410B-9281-F049E81D0DB9}.Release|x86.Build.0 = Release|Win32
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Debug|x64.ActiveCfg = Debug|x64
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Debug|x64.Build.0 = Debug|x64
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Debug|x86.ActiveCfg = Debug|Win32
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Debug|x86.Build.0 = Debug|Win32
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Release|x64.ActiveCfg = Release|x64
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Release|x64.Build.0 = Release|x64
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Release|x86.ActiveCfg = Release|Win32
+		{467CA13C-4672-4F37-9347-2E042DEEE872}.Release|x86.Build.0 = Release|Win32
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Debug|x64.ActiveCfg = Debug|x64
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Debug|x64.Build.0 = Debug|x64
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Debug|x86.ActiveCfg = Debug|Win32
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Debug|x86.Build.0 = Debug|Win32
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Release|x64.ActiveCfg = Release|x64
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Release|x64.Build.0 = Release|x64
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Release|x86.ActiveCfg = Release|Win32
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -560,6 +583,8 @@ Global
 		{F602607B-49B3-41CA-8CBA-019C8A76F1E5} = {1B2BB375-567D-4F63-AC23-24B4225CD8FF}
 		{41D523F6-2680-4E90-BA03-BB4968A114A8} = {FD2AD795-E63F-4004-9413-CB7199833ED6}
 		{D32AA53F-CB9D-410B-9281-F049E81D0DB9} = {E52312C4-86EB-4307-9409-3738168BBDA0}
+		{467CA13C-4672-4F37-9347-2E042DEEE872} = {594B4886-795F-4736-9748-646C3F429D45}
+		{CA377F41-BDDC-4B14-881F-C2EF724C5CFB} = {550F3F00-89AB-4963-B013-EFB0BAF966E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D97CCC11-9EBE-41ED-A727-A06D5C430B60}

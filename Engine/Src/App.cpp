@@ -8,6 +8,7 @@ using namespace ML_Engine::Graphics;
 using namespace ML_Engine::Input;
 using namespace ML_Engine::Physics;
 using namespace ML_Engine::Audio;
+using namespace ML_Engine::Network;
 
 void App::Run(const AppConfig& config)
 {
@@ -24,6 +25,7 @@ void App::Run(const AppConfig& config)
     auto handle = myWindow.GetWindowHandle();
     GraphicsSystem::StaticInitialize(handle, false);
     InputSystem::StaticInitialize(handle);
+    NetworkManager::StaticInitialize(handle);
     DebugUI::StaticInitialize(handle, false, true);
     SimpleDraw::StaticInitialize(config.maxVertexCount);
     TextureManager::StaticInitialize(L"../../Assets/Textures");
@@ -99,6 +101,7 @@ void App::Run(const AppConfig& config)
     ModelManager::StaticTerminate();
     TextureManager::StaticTerminate();
     SimpleDraw::StaticTerminate();
+	NetworkManager::StaticTerminate();
     DebugUI::StaticTerminate();
     InputSystem::StaticTerminate();
     GraphicsSystem::StaticTerminate();

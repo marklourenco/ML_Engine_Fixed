@@ -6,6 +6,7 @@
 #include "RenderService.h"
 #include "PhysicsService.h"
 #include "UIRenderService.h"
+#include "NetworkService.h"
 #include "WallService.h"
 #include "SaveUtil.h"
 
@@ -180,6 +181,10 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
 		else if (serviceName == "UIRenderService")
 		{
 			newService = AddService<UIRenderService>();
+		}
+		else if (serviceName == "NetworkService")
+		{
+			newService = AddService<NetworkService>();
 		}
 		else if (serviceName == "WallService")
 		{

@@ -33,6 +33,7 @@ namespace ML_Engine
 		Physics,                // registers and monitors physics objects
 		UIRender,               // renders UI components
 		Wall,				   // manages wall components in the world
+		Network,                // network service
 		Count                    // last value, can be used to chain custom services
 	};
 }

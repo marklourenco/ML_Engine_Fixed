@@ -41,6 +41,7 @@
 #include "PhysicsService.h"
 #include "UIRenderService.h"
 #include "WallService.h"
+#include "NetworkService.h"
 
 namespace ML_Engine
 {
