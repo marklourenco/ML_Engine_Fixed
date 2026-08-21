@@ -4,6 +4,8 @@
 
 namespace ML_Engine
 {
+	class NetworkControllerComponent;
+
 	class NetworkService final : public Service
 	{
 	public:
@@ -11,5 +13,19 @@ namespace ML_Engine
 
 		void Update(float deltaTime) override;
 		void DebugUI() override;
+		void Deserialize(const rapidjson::Value& value) override;
+
+		void RegisterPlayer(NetworkControllerComponent* networkController);
+		void UnregisterPlayer(NetworkControllerComponent* networkController);
+
+	private:
+		struct PlayerEntry
+		{
+			std::string id;
+			NetworkControllerComponent* networkComponent = nullptr;
+		};
+
+		std::vector<PlayerEntry> mPlayers;
+		std::filesystem::path mPlayerTemplate;
 	};
 }

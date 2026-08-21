@@ -3,6 +3,7 @@
 namespace ML_Engine::Network
 {
 	class NetworkElement;
+	class NetworkController;
 
 	class NetworkManager final
 	{
@@ -23,6 +24,12 @@ namespace ML_Engine::Network
 		void ReceiveMsg();
 		void SendMsg(const char* msg, int length);
 
+		const std::string& GetLocalId() const;
+		const std::vector<std::string>& GetPlayerIds() const;
+
+		void SetNetworkController(const std::string& id, NetworkController* networkController);
+		void RemoveNetworkController(const std::string& id);
+
 	private:
 		static LRESULT CALLBACK NetworkManagerMessageHandler(HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -34,5 +41,8 @@ namespace ML_Engine::Network
 		NetworkElement* mNetwork = nullptr;
 		HWND mWindow = nullptr;
 		std::string mWriteMessage;
+		std::vector<std::string> mPlayerIds;
+		std::unordered_map<std::string, float> mNextSetIdAttempt;
+		std::unordered_map<std::string, NetworkController*> mNetworkControllers;
 	};
 }

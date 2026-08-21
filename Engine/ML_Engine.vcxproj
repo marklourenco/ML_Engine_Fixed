@@ -150,6 +150,7 @@
     <ClInclude Include="Inc\MeshComponent.h" />
     <ClInclude Include="Inc\ML_Engine.h" />
     <ClInclude Include="Inc\ModelComponent.h" />
+    <ClInclude Include="Inc\NetworkControllerComponent.h" />
     <ClInclude Include="Inc\NetworkService.h" />
     <ClInclude Include="Inc\PhysicsService.h" />
     <ClInclude Include="Inc\PlayerControllerComponent.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Src\MeshComponent.cpp" />
     <ClCompile Include="Src\ML_Engine.cpp" />
     <ClCompile Include="Src\ModelComponent.cpp" />
+    <ClCompile Include="Src\NetworkControllerComponent.cpp" />
     <ClCompile Include="Src\NetworkService.cpp" />
     <ClCompile Include="Src\PhysicsService.cpp" />
     <ClCompile Include="Src\PlayerControllerComponent.cpp" />

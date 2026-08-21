@@ -15,6 +15,7 @@ namespace ML_Engine
 		Animator,               // adds an animator controller to the game object
 		RigidBody,              // adds a physics object to the game object
 		PlayerController,       // adds a player controller component for movement
+		NetworkController,      // adds a network controller component for movement as well as remote update
 		SoundEffect,			// adds a sound effect to an object
 		SoundBank,				// adds a group of sounds to an object
 		UIText,                 // adds a UI text component

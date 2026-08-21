@@ -33,6 +33,7 @@
 #include "TPSCameraComponent.h"
 #include "WallComponent.h"
 #include "WallJumpComponent.h"
+#include "NetworkControllerComponent.h"
 
 // services
 #include "Service.h"

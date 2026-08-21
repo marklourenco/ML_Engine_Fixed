@@ -20,6 +20,7 @@
 #include "TPSCameraComponent.h"
 #include "WallComponent.h"
 #include "WallJumpComponent.h"
+#include "NetworkControllerComponent.h"
 
 using namespace ML_Engine;
 
@@ -94,6 +95,10 @@ namespace
 		else if (componentName == "WallJumpComponent")
 		{
 			newComponent = gameObject.AddComponent<WallJumpComponent>();
+		}
+		else if (componentName == "NetworkControllerComponent")
+		{
+			newComponent = gameObject.AddComponent<NetworkControllerComponent>();
 		}
 		else
 		{
@@ -170,6 +175,10 @@ namespace
 		else if (componentName == "WallJumpComponent")
 		{
 			newComponent = gameObject.GetComponent<WallJumpComponent>();
+		}
+		else if (componentName == "NetworkControllerComponent")
+		{
+			newComponent = gameObject.GetComponent<NetworkControllerComponent>();
 		}
 		else
 		{

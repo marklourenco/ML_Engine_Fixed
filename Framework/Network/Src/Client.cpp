@@ -40,7 +40,7 @@ void Client::Initialize(HWND handle, const std::string& serverAddress)
 
 	sockaddr_in localAddress{};
 	localAddress.sin_family = AF_INET;
-	localAddress.sin_port = htons(mPort); // can make this 0 for available
+	localAddress.sin_port = htons(0); // can make this 0 for available
 	localAddress.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	if (bind(mMsgConnection, reinterpret_cast<const sockaddr*>(&localAddress), sizeof(localAddress)) == SOCKET_ERROR)
