@@ -27,22 +27,21 @@ void NetworkService::Update(float deltaTime)
 				NetworkManager::Get()->RemoveNetworkController(mPlayers[0].id);
 				mPlayers[0].id = id;
 				NetworkManager::Get()->SetNetworkController(id, mPlayers[0].networkComponent->GetNetworkController());
-
-				TransformComponent* transform = mPlayers[0].networkComponent->GetOwner().GetComponent<TransformComponent>();
-				Math::Vector3 position = transform->position;
-
-				// REVISE THIS-----------------------------------------------------HERE FIX THIS ! UPDATE
-
-				// send initial position update (only local)
-				char msgData[100];
-				sprintf_s(msgData, "%d %s %.4f %.4 %.4", (int)Network::EventType::SetPosition, position.x, position.y, position.z);
-				NetworkManager::Get()->SendMsg(msgData, 100);
 			}
 			else
 			{
 				GameObject* go = GetWorld().CreateGameObject(id, mPlayerTemplate);
 				// will register and add player to the list
 				go->Initialize();
+
+				// let the new player know where I am at (then they will do the same)
+				TransformComponent* transform = mPlayers[0].networkComponent->GetOwner().GetComponent<TransformComponent>();
+				Math::Vector3 position = transform->position;
+
+				// send initial position update (only local)
+				char msgData[100];
+				sprintf_s(msgData, "%d %s %.4f %.4f %.4f", (int)Network::EventType::SetPosition, mPlayers[0].id.c_str(), position.x, position.y, position.z);
+				NetworkManager::Get()->SendMsg(msgData, 100);
 			}
 		}
 	}

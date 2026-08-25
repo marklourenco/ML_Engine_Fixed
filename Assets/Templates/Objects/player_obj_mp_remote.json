@@ -28,14 +28,14 @@
       "Mass": 2.0,
       "ColliderData": {
         "Shape": "Sphere",
-        "Radius": 0.5
+        "Radius": 1.0
       }
     },
     "NetworkControllerComponent": {
       "ShiftSpeed": 10.0,
       "MoveSpeed": 1.0,
       "TurnSpeed": 0.1,
-      "JumpSpeed": 2.5
+      "JumpSpeed": 10.0
     }
   }
 }

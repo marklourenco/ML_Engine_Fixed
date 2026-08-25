@@ -212,7 +212,7 @@ void NetworkManager::Update(float deltaTime)
 		int eventType = 0;
 		char senderId[100];
 		Math::Vector3 position;
-		sscanf_s(data, "%d %s %.4f %.4 %.4", &eventType, senderId, (unsigned int)sizeof(senderId), &position.x, &position.y, &position.z);
+		sscanf_s(data, "%d %s %f %f %f", &eventType, senderId, (unsigned int)sizeof(senderId), &position.x, &position.y, &position.z);
 		auto itr = mNetworkControllers.find(senderId);
 		if (itr != mNetworkControllers.end())
 		{

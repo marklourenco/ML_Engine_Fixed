@@ -73,38 +73,41 @@ void NetworkControllerComponent::Update(float deltaTime)
 			moveInput.y = -moveSpeed;
 			inputEvent.moveY -= 1;
 		}
-		if (input->IsKeyDown(KeyCode::A))
-		{
-			moveInput.x = -moveSpeed;
-			inputEvent.moveX -= 1;
-		}
 		if (input->IsKeyDown(KeyCode::D))
 		{
 			moveInput.x = moveSpeed;
 			inputEvent.moveX += 1;
 		}
-		if (inputEvent.jump > 0)
+		if (input->IsKeyDown(KeyCode::A))
 		{
-			// do a jump
-			if (mRigidBodyComponent != nullptr)
-			{
-				Math::Vector3 vel = mRigidBodyComponent->GetVelocity();
-				vel.y = mJumpSpeed;
-				mRigidBodyComponent->SetVelocity(vel);
-			}
+			moveInput.x = -moveSpeed;
+			inputEvent.moveX -= 1;
 		}
+
+		mNetworkController->SetInput(inputEvent);
+	}
+
+	if (inputEvent.jump > 0)
+	{
+		// do a jump
 		if (mRigidBodyComponent != nullptr)
 		{
 			Math::Vector3 vel = mRigidBodyComponent->GetVelocity();
-			vel.x = moveInput.x;
-			vel.z = moveInput.y;
+			vel.y = mJumpSpeed;
 			mRigidBodyComponent->SetVelocity(vel);
 		}
-		else
-		{
-			Math::Vector3 vel = { moveInput.x, 0.0f, moveInput.y };
-			mTransformComponent->position += vel * deltaTime;
-		}
+	}
+	if (mRigidBodyComponent != nullptr)
+	{
+		Math::Vector3 vel = mRigidBodyComponent->GetVelocity();
+		vel.x = moveInput.x;
+		vel.z = moveInput.y;
+		mRigidBodyComponent->SetVelocity(vel);
+	}
+	else
+	{
+		Math::Vector3 vel = { moveInput.x, 0.0f, moveInput.y };
+		mTransformComponent->position += vel * deltaTime;
 	}
 }
 
@@ -131,5 +134,5 @@ Network::NetworkController* NetworkControllerComponent::GetNetworkController()
 
 void NetworkControllerComponent::SetRemote(bool remote)
 {
-
+	mRemote = remote;
 }

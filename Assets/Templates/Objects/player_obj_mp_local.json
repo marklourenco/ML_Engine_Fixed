@@ -28,7 +28,7 @@
       "Mass": 2.0,
       "ColliderData": {
         "Shape": "Sphere",
-        "Radius": 0.5
+        "Radius": 1.0
       }
     },
     "NetworkControllerComponent": {

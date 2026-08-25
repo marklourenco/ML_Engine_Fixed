@@ -66,8 +66,8 @@ void Client::Initialize(HWND handle, const std::string& serverAddress)
 	ResetMsg();
 	mInitialized = true;
 
-	std::string msg = "client:connected";
-	SendMsg(msg.c_str(), msg.size());
+	// std::string msg = "client:connected";
+	// SendMsg(msg.c_str(), msg.size());
 }
 
 void Client::Terminate()

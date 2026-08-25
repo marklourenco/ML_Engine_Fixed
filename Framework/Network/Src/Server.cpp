@@ -127,7 +127,7 @@ void Server::SendMsg(const char* msg, int length)
 	}
 
 	int dataSent = sendto(mMsgConnection, msg, length, 0, reinterpret_cast<const sockaddr*>(&mClientAddr), sizeof(mClientAddr));
-	if (dataSent = SOCKET_ERROR)
+	if (dataSent == SOCKET_ERROR)
 	{
 		mWSAErr = WSAGetLastError();
 	}
