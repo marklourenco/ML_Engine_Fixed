@@ -8,8 +8,12 @@ namespace ML_Engine::Network
 		Connected,
 		SetId,
 		IdRecieved,
-		SetPosition,
-		Input
+		Input,
+		Sync,
+		Ping,
+		Pong,
+		LatencyDone,
+		Update
 	};
 
 	struct EventSetPosition
